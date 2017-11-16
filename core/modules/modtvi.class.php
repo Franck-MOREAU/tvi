@@ -219,19 +219,19 @@ class modtvi extends DolibarrModules
 						"TVI -- Parc de Véhicules",
 						),
 				'tabsql' => array(
-						'SELECT f.rowid as rowid, f.parc as parc, f.fk_type as fk_type, f.immat as immat, f.chassis as chassis, f.active FROM ' . MAIN_DB_PREFIX . 'c_tvi_vehicules as f',
+						'SELECT f.rowid as rowid, f.parc as parc, f.type as type, f.immat as immat, f.chassis as chassis, f.active FROM ' . MAIN_DB_PREFIX . 'c_tvi_vehicules as f',
 						),
 				'tabsqlsort' => array(
 						'parc ASC',
 				),
 				'tabfield' => array(
-						"parc,fk_type,immat,chassis",
+						"parc,type,immat,chassis",
 						),
 				'tabfieldvalue' => array(
-						"parc,fk_type,immat,chassis",
+						"parc,type,immat,chassis",
 						),
 				'tabfieldinsert' => array(
-						"parc,fk_type,immat,chassis",
+						"parc,type,immat,chassis",
 						),
 				'tabrowid' => array(
 						"rowid",
