@@ -213,7 +213,7 @@ class modtvi extends DolibarrModules
 		$this->dictionnaries = array(
 				'langs' => 'tvi@tvi',
 				'tabname' => array(
-						MAIN_DB_PREFIX . "c_tvi_véhicules",
+						MAIN_DB_PREFIX . "c_tvi_vehicules",
 						),
 				'tablib' => array(
 						"TVI -- Parc de Véhicules",
