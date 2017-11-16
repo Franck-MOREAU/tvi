@@ -249,12 +249,15 @@ class mod_facture_tvi extends ModeleNumRefFactures
 			$prefix = $this->prefixdeposit;
 		else
 			$prefix = $this->{'prefixinvoice'.$invoice_type};
+		
+		$date = $facture->date; // This is invoice date (not creation date)
+		$yymm = strftime("%y %m", $date);
 
 			// D'abord on recupere la valeur max
 		$posindice = 10;
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM " . $posindice . ") AS SIGNED)) as max"; // This is standard SQL
 		$sql .= " FROM " . MAIN_DB_PREFIX . "facture";
-		$sql .= " WHERE facnumber LIKE '" . $prefix . "____-%'";
+		$sql .= " WHERE facnumber LIKE '" . $prefix . ' ' . $yymm ." %'";
 		$sql .= " AND entity IN (" . getEntity('facture', 1) . ")";
 
 		$resql = $db->query($sql);
@@ -278,7 +281,7 @@ class mod_facture_tvi extends ModeleNumRefFactures
 			$ref = '';
 			$sql = "SELECT facnumber as ref";
 			$sql .= " FROM " . MAIN_DB_PREFIX . "facture";
-			$sql .= " WHERE facnumber LIKE '" . $prefix . "____-" . $num . "'";
+			$sql .= " WHERE facnumber LIKE '" . $prefix . ' ' . $yymm . " " . $num . "'";
 			$sql .= " AND entity IN (" . getEntity('facture', 1) . ")";
 
 			dol_syslog(get_class($this) . "::getNextValue", LOG_DEBUG);
