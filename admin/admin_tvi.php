@@ -29,9 +29,9 @@ if (! $res) {
 }
 
 // Libraries
-require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
-require_once DOL_DOCUMENT_ROOT.'/tvi/class/tvi.class.php';
+dol_include_once( '/core/lib/admin.lib.php');
+dol_include_once('/core/class/html.form.class.php');
+dol_include_once('/tvi/class/tvi.class.php');
 
 // Translations
 $langs->load("admin");
