@@ -78,7 +78,7 @@ class mod_facture_tvi extends ModeleNumRefFactures
 		$fayymm = '';
 		$max = '';
 
-		$posindice = 8;
+		$posindice = 10;
 		// CD
 		$fayymm = '';
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM " . $posindice . ") AS SIGNED)) as max";
@@ -166,7 +166,7 @@ class mod_facture_tvi extends ModeleNumRefFactures
 		// Check credit note num
 		$fayymm = '';
 
-		$posindice = 8;
+		$posindice = 10;
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM " . $posindice . ") AS SIGNED)) as max"; // This is standard SQL
 		$sql .= " FROM " . MAIN_DB_PREFIX . "facture";
 		$sql .= " WHERE facnumber LIKE '" . $this->prefixcreditnote . "____-%'";
@@ -188,7 +188,7 @@ class mod_facture_tvi extends ModeleNumRefFactures
 		// Check deposit num
 		$fayymm = '';
 
-		$posindice = 8;
+		$posindice = 10;
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM " . $posindice . ") AS SIGNED)) as max"; // This is standard SQL
 		$sql .= " FROM " . MAIN_DB_PREFIX . "facture";
 		$sql .= " WHERE facnumber LIKE '" . $this->prefixdeposit . "____-%'";
@@ -251,7 +251,7 @@ class mod_facture_tvi extends ModeleNumRefFactures
 			$prefix = $this->{'prefixinvoice'.$invoice_type};
 
 			// D'abord on recupere la valeur max
-		$posindice = 8;
+		$posindice = 10;
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM " . $posindice . ") AS SIGNED)) as max"; // This is standard SQL
 		$sql .= " FROM " . MAIN_DB_PREFIX . "facture";
 		$sql .= " WHERE facnumber LIKE '" . $prefix . "____-%'";
