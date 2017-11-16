@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `llx_c_tvi_véhicules` (
+CREATE TABLE IF NOT EXISTS `llx_c_tvi_vehicules` (
   `rowid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `parc` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
