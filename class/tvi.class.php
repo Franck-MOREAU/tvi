@@ -652,6 +652,7 @@ class Tvi extends CommonObject
 
 		$this->db->begin();
 		$already_done = array();
+		$created_invoices = array();
 		if (is_array($this->lines_contract) && count($this->lines_contract) > 0) {
 			foreach ( $this->lines_contract as $linecontract ) {
 				if (! in_array($linecontract->fk_contrat, $already_done)) {
@@ -693,6 +694,7 @@ class Tvi extends CommonObject
 							$invoice->modelpdf = $conf->global->FACTURE_ADDON_PDF;
 							$invoice->array_options['options_typ_contract'] = $contract->array_options['options_typ_contract'];
 							$invoice->array_options['options_vehicule']=$contract->array_options['options_vehicule'];
+							$invoice->import_key = dol_now();
 							
 							if(!empty($invoice->array_options['options_vehicule'])){
 								$sql = "SELECT parc, type, immat, chassis FROM " .MAIN_DB_PREFIX . "c_tvi_vehicules WHERE rowid = " . $invoice->array_options['options_vehicule'];
@@ -753,6 +755,7 @@ class Tvi extends CommonObject
 
 							if (count($invoice->lines)>0) {
 								$result = $invoice->create($user);
+								$created_invoices[] = $result;
 								if ($result < 0) {
 									$this->errors[] = $invoice->error;
 									$error ++;
@@ -795,7 +798,8 @@ class Tvi extends CommonObject
 
 		if (empty($error)) {
 			$this->db->commit();
-			$this->last_fact_list = $already_done;
+			$this->last_fact_list = $created_invoices;
+			$this->last_treated_ct = $already_done;
 			//For cron jobs 0 mean OK
 			return 0;
 		} else {
