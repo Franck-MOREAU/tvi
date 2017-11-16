@@ -625,7 +625,6 @@ class Tvi extends CommonObject
 		global $conf,$user, $mysoc, $langs;
 
 		require_once DOL_DOCUMENT_ROOT . '/contrat/class/contrat.class.php';
-		require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
 		require_once DOL_DOCUMENT_ROOT . '/compta/facture/class/facture.class.php';
 		require_once DOL_DOCUMENT_ROOT . '/core/lib/date.lib.php';
 		require_once DOL_DOCUMENT_ROOT . '/core/lib/price.lib.php';
@@ -699,16 +698,16 @@ class Tvi extends CommonObject
 								$sql = "SELECT parc, type, immat, chassis FROM " .MAIN_DB_PREFIX . "c_tvi_vehicules WHERE rowid = " . $invoice->array_options['options_vehicule'];
 								$resql=$this->db->query($sql);
 								$dico = $this->db->fetch_object($resql);
-								$invoice->note_public = '<table border="1"><tr>';
-								$invoice->note_public .='<td>N° Parc</td>';
-								$invoice->note_public .='<td>Type</td>';
-								$invoice->note_public .='<td>Immat.</td>';
-								$invoice->note_public .='<td>N° de Châssis</td>';
+								$invoice->note_public = '<table class="border" width="100%"><tr>';
+								$invoice->note_public .='<td align="center">N° Parc</td>';
+								$invoice->note_public .='<td align="center">Type</td>';
+								$invoice->note_public .='<td align="center">Immat.</td>';
+								$invoice->note_public .='<td align="center">N° de Châssis</td>';
 								$invoice->note_public .='</tr><tr>';
-								$invoice->note_public .='<td>'.$dico->parc.'</td>';
-								$invoice->note_public .='<td>'.$dico->type.'</td>';
-								$invoice->note_public .='<td>'.$dico->immat.'</td>';
-								$invoice->note_public .='<td>'.$dico->chassis.'</td>';
+								$invoice->note_public .='<td align="center">'.$dico->parc.'</td>';
+								$invoice->note_public .='<td align="center">'.$dico->type.'</td>';
+								$invoice->note_public .='<td align="center">'.$dico->immat.'</td>';
+								$invoice->note_public .='<td align="center">'.$dico->chassis.'</td>';
 								$invoice->note_public .='</tr></table>';
 							}
 
