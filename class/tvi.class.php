@@ -680,37 +680,35 @@ class Tvi extends CommonObject
 							$invoice->ref_client = $contract->ref . '-' . dol_print_date(dol_now());
 
 							if (! empty($contract->thirdparty->cond_reglement_id)) {
-								$invoice->cond_reglement_id = $object->thirdparty->cond_reglement_id;
+								$invoice->cond_reglement_id = $contract->thirdparty->cond_reglement_id;
 							} else {
 								$invoice->cond_reglement_id = 1;
 							}
 
-							if (! empty($object->thirdparty->mode_reglement_id)) {
+							if (! empty($contract->thirdparty->mode_reglement_id)) {
 								$invoice->mode_reglement_id = $contract->thirdparty->mode_reglement_id;
 							}
 
 							$invoice->date = $date_gen;
 							$invoice->socid = $contract->thirdparty->id;
-							$invoice->fk_project = $contract->fk_project;
 							$invoice->modelpdf = $conf->global->FACTURE_ADDON_PDF;
-
-							if (!empty($contract->fk_project)) {
-								$project = new Project($this->db);
-								$project->fetch($contract->fk_project);
-								$extrafields = new ExtraFields($this->db);
-								$extralabels = $extrafields->fetch_name_optionals_label($project->table_element, true);
-								$project->fetch_optionals($project->id, $extralabels);
-
+							$invoice->array_options['options_typ_contract'] = $contract->array_options['options_typ_contract'];
+							$invoice->array_options['options_vehicule']=$contract->array_options['options_vehicule'];
+							
+							if(!empty($invoice->array_options['options_vehicule'])){
+								$sql = "SELECT parc, type, immat, chassis FROM " .MAIN_DB_PREFIX . "c_tvi_vehicules WHERE rowid = " . $invoice->array_options['options_vehicule'];
+								$resql=$this->db->query($sql);
+								$dico = $this->db->fetch_object($resql);
 								$invoice->note_public = '<table border="1"><tr>';
 								$invoice->note_public .='<td>N° Parc</td>';
 								$invoice->note_public .='<td>Type</td>';
 								$invoice->note_public .='<td>Immat.</td>';
 								$invoice->note_public .='<td>N° de Châssis</td>';
 								$invoice->note_public .='</tr><tr>';
-								$invoice->note_public .='<td>'.$project->ref.'</td>';
-								$invoice->note_public .='<td>'.$extrafields->showOutputField('modele', $project->array_options['options_modele']).'</td>';
-								$invoice->note_public .='<td>'.$extrafields->showOutputField('immat', $project->array_options['options_immat']).'</td>';
-								$invoice->note_public .='<td>'.$extrafields->showOutputField('chassis', $project->array_options['options_chassis']).'</td>';
+								$invoice->note_public .='<td>'.$dico->parc.'</td>';
+								$invoice->note_public .='<td>'.$dico->type.'</td>';
+								$invoice->note_public .='<td>'.$dico->immat.'</td>';
+								$invoice->note_public .='<td>'.$dico->chassis.'</td>';
 								$invoice->note_public .='</tr></table>';
 							}
 
@@ -798,7 +796,7 @@ class Tvi extends CommonObject
 
 		if (empty($error)) {
 			$this->db->commit();
-
+			$this->last_fact_list = $already_done;
 			//For cron jobs 0 mean OK
 			return 0;
 		} else {
