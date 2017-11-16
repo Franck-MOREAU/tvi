@@ -1,0 +1,12 @@
+.cal_current_month_peruserright {
+	border-top: 0;
+	border-right: solid 2px #6C7C7B;
+	border-left: solid 1px #E0E0E0;
+	border-bottom: solid 1px #E0E0E0;
+}
+
+.cal_autoshrimp {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}
