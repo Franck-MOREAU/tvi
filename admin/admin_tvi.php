@@ -134,54 +134,7 @@ print '</table>';
 print '<input type="submit" class="button" value="' . $langs->trans("Save") . '">';
 print '</form>';
 
-print_fiche_titre('Paramétrage des entretiens périodiques');
 
-
-
-print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" >';
-print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
-print '<input type="hidden" name="action" value="adnewperiode">';
-
-print '<table class="noborder" width="100%">';
-print '<tr class="liste_titre">';
-Print '<th colspan="5" align="center">Ajouter un nouvel entretien périodique</th></tr>';
-print '<tr class="pair">';
-print '<td align="center">';
-$dico =array();
-$dico = $tvi->loaddicogenre();
-print $form->selectarray('fk_genre', $dico,$genre);
-print '</td>';
-print '<td align="center">';
-$tvi->select_type_actions($event,'fk_typeevent','system',0,1);
-print '</td>';
-print '<td align="center"><input name="franchise" size="5" value="' . $franch . '"> Mois</td>';
-print '<td align="center"><input name="periode" size="5" value="' . $per . '"> Mois</td>';
-print '<td align="center"><input type="hidden" name="periodeid" value="' . $periodeid . '"><input type="submit" class="button" value="Ajouter"></td>';
-print '</tr>';
-print '<tr class="liste_titre">';
-Print '<th align="center" width="23%">Type de Véhicule</th>';
-Print '<th align="center" width="23%">Type d\'entretien</th>';
-Print '<th align="center" width="23%">Période de franchise (mois)</th>';
-Print '<th align="center" width="23%">périodicité de l\'entretien(mois)</th>';
-Print '<th align="center"></th>';
-print '</tr>';
-$liste = $tvi->fetchallperiode();
-foreach($liste as $obj){
- 	print '<tr>';
- 	print '<td>' . $obj->genre . '</td>';
- 	print '<td align="center">' . $obj->libelle . '</td>';
- 	print '<td align="center">' . $obj->franchise . ' Mois</td>';
- 	print '<td align="center">' . $obj->periode . ' Mois</td>';
- 	print '<td align="right">';
- 	print '<a style="padding-left: 5px;" href="'. DOL_URL_ROOT .'/tvi/admin/admin_tvi.php?action=editline&periodeid='.$obj->rowid . '"><img src="' . DOL_URL_ROOT . '/theme/eldy/img/edit.png" border="0" alt="" title="Modifier"></a>';
- 	print '<a style="padding-left: 5px;" href="'. DOL_URL_ROOT .'/tvi/admin/admin_tvi.php?action=deleteline&periodeid='.$obj->rowid . '"><img src="' . DOL_URL_ROOT . '/theme/eldy/img/delete.png" border="0" alt="" title="Modifier"></a>';
- 	print '</td>';
- 	print '</tr>';
-}
-
-
-print '</table>';
-print '</form>';
 dol_fiche_end();
 
 llxFooter();
