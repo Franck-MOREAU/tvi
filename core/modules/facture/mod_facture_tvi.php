@@ -222,20 +222,16 @@ class mod_facture_tvi extends ModeleNumRefFactures
 		global $db;
 
 		// Find if contraxt is link to invoice
+		
+		$facture->fetchObjectLinked(null, 'contrat', $facture->id, 'facture');
 
-		if (! empty($facture->fk_project)) {
+		if (is_array($facture->linkedObjects) && count($facture->linkedObjects) > 0) {
 			// WE are in CD, LC, or VE
-
-			$facture->fetchObjectLinked(null, 'contrat', $facture->id, 'facture');
-
 			$invoice_type = '';
-			if (is_array($facture->linkedObjects) && count($facture->linkedObjects) > 0) {
-				foreach ( $facture->linkedObjects as $typeobj => $obj ) {
-					$obj_cont=reset($obj);
-					$invoice_type = $obj_cont->array_options['options_typ_contract'];
-
-					break;
-				}
+			foreach ( $facture->linkedObjects as $typeobj => $obj ) {
+				$obj_cont=reset($obj);
+				$invoice_type = $obj_cont->array_options['options_typ_contract'];
+				break;
 			}
 
 			if (empty($invoice_type)) {
