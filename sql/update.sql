@@ -1,1 +1,0 @@
-ALTER TABLE llx_loan ADD COLUMN fk_project integer DEFAULT NULL;
