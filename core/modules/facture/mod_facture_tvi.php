@@ -56,10 +56,10 @@ class mod_facture_tvi extends ModeleNumRefFactures
 	 * @return string Example
 	 */
 	function getExample() {
-		$str = $this->prefixinvoiceCD . dol_print_date(dol_now(), '%y') . dol_print_date(dol_now(), '%m').'-0001'.'<BR>';
-		$str .= $this->prefixinvoiceVE . dol_print_date(dol_now(), '%y') . dol_print_date(dol_now(), '%m').'-0001'.'<BR>';
-		$str .= $this->prefixinvoiceLD . dol_print_date(dol_now(), '%y') . dol_print_date(dol_now(), '%m').'-0001'.'<BR>';
-		$str .= $this->prefixinvoiceDV . dol_print_date(dol_now(), '%y') . dol_print_date(dol_now(), '%m').'-0001'.'<BR>';
+		$str = $this->prefixinvoiceCD . ' ' . dol_print_date(dol_now(), '%y') . ' ' . dol_print_date(dol_now(), '%m') . ' 0001'.'<BR>';
+		$str .= $this->prefixinvoiceVE . ' '.  dol_print_date(dol_now(), '%y') . ' '.  dol_print_date(dol_now(), '%m').' 0001'.'<BR>';
+		$str .= $this->prefixinvoiceLD . ' ' . dol_print_date(dol_now(), '%y') . ' ' . dol_print_date(dol_now(), '%m').' 0001'.'<BR>';
+		$str .= $this->prefixinvoiceDV . ' ' . dol_print_date(dol_now(), '%y') . ' ' . dol_print_date(dol_now(), '%m').' 0001'.'<BR>';
 		return $str;
 	}
 
