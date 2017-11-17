@@ -441,7 +441,7 @@ class pdf_contrattvi extends ModelePDFContract
 				}
 				if (count($tvi->lines_contract)>0 && $tvi->lines_contract[0]->price_ht!=0) {
 					$pdf->SetXY(103,210);
-					$str = $outputlangs->convToOutputCharset($extrafields_contrat->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
+					$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
 					$pdf->SetXY(128,210);
@@ -504,7 +504,7 @@ class pdf_contrattvi extends ModelePDFContract
 				}
 				if (count($tvi->lines_contract)>0 && $tvi->lines_contract[0]->price_ht!=0) {
 					$pdf->SetXY(103,218.5);
-					$str = $outputlangs->convToOutputCharset($extrafields_contrat->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
+					$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
 					$pdf->SetXY(128,218.5);
@@ -535,7 +535,7 @@ class pdf_contrattvi extends ModelePDFContract
 				}
 				if (count($tvi->lines_contract)>0 && $tvi->lines_contract[0]->price_ht!=0) {
 					$pdf->SetXY(103,222.5);
-					$str = $outputlangs->convToOutputCharset($extrafields_contrat->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
+					$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
 					$pdf->SetXY(128,222.5);
@@ -566,7 +566,7 @@ class pdf_contrattvi extends ModelePDFContract
 				}
 				if (count($tvi->lines_contract)>0 && $tvi->lines_contract[0]->price_ht!=0) {
 					$pdf->SetXY(103,226.5);
-					$str = $outputlangs->convToOutputCharset($extrafields_contrat->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
+					$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']));
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
 					$pdf->SetXY(128,226.5);
