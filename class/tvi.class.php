@@ -188,6 +188,7 @@ class Tvi extends CommonObject
 		$sql .= "p.label as product_label, ";
 		$sql .= "p.description as product_desc, ";
 		$sql .= "p.ref as product_ref,";
+		$sql .= "p.rowid as product_id, ";
 		$sql .= " d.rowid, ";
 		$sql .= "d.fk_contrat,";
 		$sql .= "d.statut, ";

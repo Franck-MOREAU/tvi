@@ -263,7 +263,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Date de loc
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_LOC_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_LOC_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -295,7 +295,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				// Assurance responsabilité civile
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_ASS_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_ASS_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -320,7 +320,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Assurance Domage
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
+				$array_filter['p.rowid'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -351,7 +351,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//€ Km Sup
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_KM_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_KM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -428,7 +428,7 @@ class pdf_contrattvi extends ModelePDFContract
 				//Tableau charges locataires
 				//Taxe essieux
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_TAXES_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_TAXES_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -459,7 +459,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Assurance domage
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
+				$array_filter['p.rowid'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -491,7 +491,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Vitesse technique
 				$array_filter = array();
-				$array_filter['p.id'] = $array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_CT_PRODUCT;;
+				$array_filter['p.rowid'] = $conf->gloabl->TVI_CONTRACT_CT_PRODUCT;;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -522,7 +522,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Entretient Pneumatique
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_ENTREP_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_ENTREP_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -553,7 +553,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Dépannage - remorquage
 				$array_filter = array();
-				$array_filter['p.id'] = $conf->global->TVI_CONTRCT_DEPREM_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRCT_DEPREM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
