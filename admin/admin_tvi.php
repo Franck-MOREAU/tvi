@@ -53,48 +53,77 @@ $periodeid = GETPOST('periodeid','int');
  */
 
 if ($action == 'setvar') {
-
-	$nb_day = GETPOST('TVI_INVOICE_AUTO_STATUS', 'int');
-	if (! empty($nb_day)) {
-		$res = dolibarr_set_const($db, 'TVI_INVOICE_AUTO_STATUS', $nb_day, 'chaine', 0, '', $conf->entity);
+	$var = GETPOST('TVI_INVOICE_AUTO_STATUS', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_INVOICE_AUTO_STATUS', $var, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
 	}
-
-
-}elseif($action=='adnewperiode'&&empty($periodeid)){
-	$fk_genre=GETPOST('fk_genre','int');
-	$fk_typeevent=GETPOST('fk_typeevent','int');
-	$franchise=GETPOST('franchise','int');
-	$periode=GETPOST('periode','int');
-
-	if(!empty($fk_genre)&&!empty($fk_typeevent)&&!empty($franchise)&&!empty($periode)){
-		$tvi->addnewperiode($fk_genre, $fk_typeevent, $franchise, $periode);
+	
+	$var = GETPOST('TVI_CONTRACT_LOC_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_LOC_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
 	}
-	header("Location: ".DOL_URL_ROOT.'/tvi/admin/admin_tvi.php');
-	exit;
-}elseif ($action=='editline'&&!empty($periodeid)){
-	$obj=$tvi->fetchperiode($periodeid);
-	$genre = $obj->fk_genre;
-	$event = $obj->fk_typeevent;
-	$franch = $obj->franchise;
-	$per = $obj->periode;
-}elseif($action=='adnewperiode'&&!empty($periodeid)){
-	$fk_genre=GETPOST('fk_genre','int');
-	$fk_typeevent=GETPOST('fk_typeevent','int');
-	$franchise=GETPOST('franchise','int');
-	$periode=GETPOST('periode','int');
-
-	if(!empty($fk_genre)&&!empty($fk_typeevent)&&!empty($franchise)&&!empty($periode)){
-		$tvi->updateperiode($periodeid,$fk_genre, $fk_typeevent, $franchise, $periode);
+	if (! $res > 0) {
+		$error ++;
 	}
-	header("Location: ".DOL_URL_ROOT.'/tvi/admin/admin_tvi.php');
-	exit;
-}elseif($action=='deleteline'&&!empty($periodeid)){
-	$tvi->deleteperiode($periodeid);
-	header("Location: ".DOL_URL_ROOT.'/tvi/admin/admin_tvi.php');
-	exit;
+	
+	$var = GETPOST('TVI_CONTRACT_ASS_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_ASS_PRODUCT',$var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_ASSDOM_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_ASSDOM_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_KM_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_KM_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_TAXES_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_TAXES_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_CT_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_CT_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_ENTREP_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_ENTREP_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
+	
+	$var = GETPOST('TVI_CONTRACT_DEPREM_PRODUCT', 'int');
+	if (! empty($var)) {
+		$res = dolibarr_set_const($db, 'TVI_CONTRACT_DEPREM_PRODUCT', $var, 'chaine', 0, '', $conf->entity);
+	}
+	if (! $res > 0) {
+		$error ++;
+	}
 }
 
 /*
@@ -129,6 +158,54 @@ print '<OPTION value="1" ' . ($conf->global->TVI_INVOICE_AUTO_STATUS==1?'selecte
 print '</SELECT></td>';
 print '</tr>';
 
+print '<tr class="pair"><td>Produit Location Terme Fixe</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_LOC_PRODUCT,'TVI_CONTRACT_LOC_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Location Terme variable</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_KM_PRODUCT,'TVI_CONTRACT_KM_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Assurance RC</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_ASS_PRODUCT,'TVI_CONTRACT_ASS_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Dommages</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_ASSDOM_PRODUCT,'TVI_CONTRACT_ASSDOM_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Controle Technique</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_CT_PRODUCT,'TVI_CONTRACT_CT_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Entretien Pneumatique</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_ENTREP_PRODUCT,'TVI_CONTRACT_ENTREP_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>Produit Dépanage remorquage</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_DEPREM_PRODUCT,'TVI_CONTRACT_DEPREM_PRODUCT');
+print '</td>';
+print '</tr>';
+
+print '<tr class="pair"><td>'."Produit taxe a l'essieu".'</td>';
+print '<td align="left">';
+print $form->select_produits($conf->global->TVI_CONTRACT_TAXES_PRODUCT,'TVI_CONTRACT_TAXES_PRODUCT');
+print '</td>';
+
+print '</tr>';
 print '</table>';
 
 print '<input type="submit" class="button" value="' . $langs->trans("Save") . '">';

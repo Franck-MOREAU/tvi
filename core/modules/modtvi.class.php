@@ -166,7 +166,79 @@ class modtvi extends DolibarrModules
 				1,
 				'current',
 				1
-			)
+			),
+			3 => array(
+				'TVI_CONTRACT_LOC_PRODUCT',
+				'chaine',
+				'0',
+				'Produit de location terme fixe',
+				1,
+				'current',
+				1
+			),
+			4 => array(
+				'TVI_CONTRACT_ASS_PRODUCT',
+				'chaine',
+				'0',
+				"Produit d'assurance responsabilité civile",
+				1,
+				'current',
+				1
+			),
+			5 => array(
+				'TVI_CONTRACT_ASSDOM_PRODUCT',
+				'chaine',
+				'0',
+				"Produit d'assurance dommages",
+				1,
+				'current',
+				1
+			),
+			6 => array(
+				'TVI_CONTRACT_KM_PRODUCT',
+				'chaine',
+				'0',
+				"Produit de location Terme Variable",
+				1,
+				'current',
+				1
+			),
+			7 => array(
+				'TVI_CONTRACT_TAXES_PRODUCT',
+				'chaine',
+				'0',
+				"Produit de taxe a l'essieu",
+				1,
+				'current',
+				1
+			),
+			8 => array(
+				'TVI_CONTRACT_CT_PRODUCT',
+				'chaine',
+				'0',
+				"Produit controle technique",
+				1,
+				'current',
+				1
+			),
+			9 => array(
+				'TVI_CONTRACT_ENTREP_PRODUCT',
+				'chaine',
+				'0',
+				"Produit entretien pneumatiques",
+				1,
+				'current',
+				1
+			),
+			10 => array(
+				'TVI_CONTRACT_DEPREM_PRODUCT',
+				'chaine',
+				'0',
+				"Produit dépanage remorquage",
+				1,
+				'current',
+				1
+			),
 		);
 		
 

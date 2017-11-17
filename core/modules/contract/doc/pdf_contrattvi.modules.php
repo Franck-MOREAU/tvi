@@ -33,7 +33,6 @@ require_once DOL_DOCUMENT_ROOT.'/core/lib/pdf.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
-require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
 dol_include_once('/tvi/class/tvi.class.php');
 
 
@@ -219,15 +218,10 @@ class pdf_contrattvi extends ModelePDFContract
 
 				$pdf->SetPage(1);
 
-				$project = new Project($this->db);
-				$project->fetch($object->fk_project);
 				$extrafields = new ExtraFields($this->db);
-				$extralabels = $extrafields->fetch_name_optionals_label($project->table_element, true);
+				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
-				$extrafields_contrat = new ExtraFields($this->db);
-				$extralabels_contrat = $extrafields_contrat->fetch_name_optionals_label($object->table_element, true);
-
-				$project->fetch_optionals($project->id, $extralabels);
+				$object->fetch_optionals($object->id, $extralabels);
 
 				$tvi = new Tvi($this->db);
 
@@ -248,31 +242,28 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Carac véhicule
 				$pdf->SetXY(14, 112);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $project->array_options['options_modele']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $object->array_options['options_type']))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(68, 112);
-				$str = $outputlangs->convToOutputCharset($project->ref)."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $object->array_options['options_parc']))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(120, 112);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('marque', $project->array_options['options_marque']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('marque', $object->array_options['options_marque']))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(38, 119.5);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('immat', $project->array_options['options_immat']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('immat', $object->array_options['options_immat']))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(123, 119.5);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('chassis', $project->array_options['options_chassis']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('chassis', $object->array_options['options_chassis']))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				//Date de loc
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'LOC';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_LOC_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -304,10 +295,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				// Assurance responsabilité civile
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'ASSCIV';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_ASS_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -332,10 +320,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Assurance Domage
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'ASSDOM';
+				$array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -366,10 +351,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//€ Km Sup
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'KM';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_KM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -446,10 +428,7 @@ class pdf_contrattvi extends ModelePDFContract
 				//Tableau charges locataires
 				//Taxe essieux
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'TAXESS';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_TAXES_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -480,10 +459,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Assurance domage
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'ASSDOM';
+				$array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -515,10 +491,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Vitesse technique
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'VITTECH';
+				$array_filter['p.id'] = $array_filter['p.id'] = $conf->gloabl->TVI_CONTRACT_CT_PRODUCT;;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -549,10 +522,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Entretient Pneumatique
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'ENTREP';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRACT_ENTREP_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
@@ -583,10 +553,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Dépannage - remorquage
 				$array_filter = array();
-				$array_filter['t.fk_projet'] = array(
-						$project->id
-				);
-				$array_filter['p.ref'] = 'DEPREM';
+				$array_filter['p.id'] = $conf->global->TVI_CONTRCT_DEPREM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
