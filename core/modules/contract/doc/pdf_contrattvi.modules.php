@@ -328,6 +328,7 @@ class pdf_contrattvi extends ModelePDFContract
 				}
 
 				//Assurance Domage
+				$tvi->lines_contract = array();
 				$array_filter = array();
 				$array_filter['p.rowid'] = $conf->gloabl->TVI_CONTRACT_ASSDOM_PRODUCT;
 				$array_filter['d.statut'] = array(
