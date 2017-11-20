@@ -242,9 +242,9 @@ class pdf_contrattvi extends ModelePDFContract
 				
 				if($object->array_options['options_vehicule'] > 0){
 					$sql = "SELECT parc, type, immat, chassis FROM " . MAIN_DB_PREFIX . "c_tvi_vehicules WHERE rowid=".$object->array_options['options_vehicule'];
-					$resql = $db->query($sql);
+					$resql = $this->db->query($sql);
 					if($resql){
-						$vh=$db->fetch_object($resql);
+						$vh=$this->db->fetch_object($resql);
 					}
 				}
 				
