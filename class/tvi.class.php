@@ -228,7 +228,7 @@ class Tvi extends CommonObject
 
 		if (is_array($filter)) {
 			foreach ( $filter as $key => $value ) {
-				if ($key == 't.rowid' || $key == 'd.rowid' || $key == 't.fk_soc') {
+				if ($key == 't.rowid' || $key == 'd.rowid' || $key == 't.fk_soc' || $key=='p.rowid' || $key=='d.fk_product') {
 					$sql .= ' AND ' . $key . ' = ' . $value;
 				} elseif ($key == 't.fk_projet' || $key == 'd.statut' || $key == 't.statut') {
 					$sql .= ' AND ' . $key . ' IN (' . implode(',', $value) . ')';
