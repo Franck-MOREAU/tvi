@@ -170,7 +170,8 @@ class Tvi extends CommonObject
 		$this->nbofservicesopened = 0;
 		$this->nbofservicesexpired = 0;
 		$this->nbofservicesclosed = 0;
-
+		$this->lines_contract=array();
+		
 		$total_ttc = 0;
 		$total_vat = 0;
 		$total_ht = 0;
