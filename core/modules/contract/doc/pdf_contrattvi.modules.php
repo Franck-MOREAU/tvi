@@ -239,26 +239,35 @@ class pdf_contrattvi extends ModelePDFContract
 				$pdf->SetXY(63, 91.5);
 				$str = $outputlangs->convToOutputCharset($object->thirdparty->phone)."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
-
+				
+				if($object->array_options['options_vehicule'] > 0){
+					$sql = "SELECT parc, type, immat, chassis FROM " . MAIN_DB_PREFIX . "c_tvi_vehicules WHERE rowid=".$object->array_options['options_vehicule'];
+					$resql = $db->query($sql);
+					if($resql){
+						$vh=$db->fetch_object($resql);
+					}
+				}
+				
+				
 				//Carac véhicule
 				$pdf->SetXY(14, 112);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $object->array_options['options_type']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $vh->type))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(68, 112);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $object->array_options['options_parc']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('modele', $vh->parc))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(120, 112);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('marque', $object->array_options['options_marque']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('marque', $vh->marque))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(38, 119.5);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('immat', $object->array_options['options_immat']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('immat', $vh->immat))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				$pdf->SetXY(123, 119.5);
-				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('chassis', $object->array_options['options_chassis']))."\n";
+				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('chassis', $vh->chassis))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				//Date de loc
