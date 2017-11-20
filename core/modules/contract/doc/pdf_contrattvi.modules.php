@@ -563,7 +563,7 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Dépannage - remorquage
 				$array_filter = array();
-				$array_filter['p.rowid'] = $conf->global->TVI_CONTRCT_DEPREM_PRODUCT;
+				$array_filter['p.rowid'] = $conf->global->TVI_CONTRACT_DEPREM_PRODUCT;
 				$array_filter['d.statut'] = array(
 						0,1,4
 				);
