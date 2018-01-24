@@ -410,14 +410,13 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Mensualité
 				if (!empty($date_cnt_start) && !empty($date_cnt_end)) {
-
 					$DtSt=new DateTime();
 					$DtSt->setTimestamp($date_cnt_start);
 					$DtEnd=new DateTime();
 					$DtEnd->setTimestamp($date_cnt_end);
-
+					
 					$DateInterval = $DtSt->diff($DtEnd);
-					$str=$DateInterval->format('%m');
+					$str=$DateInterval->format('m');
 					if (empty($str)) {
 						$str='ERR';
 					}
