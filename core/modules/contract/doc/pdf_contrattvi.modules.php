@@ -294,13 +294,21 @@ class pdf_contrattvi extends ModelePDFContract
 					$pdf->SetXY(30, 136.2);
 					$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
-
+					
 					$pdf->SetXY(30, 144);
 					$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_end))."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
 					$loyer=$tvi->lines_contract[0]->price_ht;
 				}
+				
+				$pdf->SetXY(123, 136.2);
+				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
+				$pdf->MultiCell(80, 0, $str,0,'L');
+				
+				$pdf->SetXY(123, 144);
+				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmr'])."\n";
+				$pdf->MultiCell(80, 0, $str,0,'L');
 
 				// Assurance responsabilité civile
 				$array_filter = array();
@@ -415,9 +423,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$DtEnd=new DateTime();
 					$DtEnd->setTimestamp($date_cnt_end);
 					
-					$DateInterval = $DtEnd->diff($DtSt);
-// 					$month = $DateInterval->format('/%m')
-// 					$year = 
+					$DateInterval = $DtEnd->diff($DtSt); 
 					$str=($DateInterval->format('%y')*12)+ $DateInterval->format('%m');
 					if (empty($str)) {
 						$str='ERR';
