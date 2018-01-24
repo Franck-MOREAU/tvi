@@ -108,7 +108,7 @@ class ActionsTvi // extends CommonObject
 			foreach($object->lines as $line) {
 
 				if ($line->date_ouverture_prevue<=dol_now() && dol_now()<=$line->date_fin_validite) {
-					$result = $object->active_line($user, $line->id, dol_now(), $line->date_fin_validite, '');
+					$result = $object->active_line($user, $line->id, $line->date_ouverture_prevue, $line->date_fin_validite, '');
 					if ($result<0) {
 						setEventMessages($object->error, $object->errors,'errors');
 					}
