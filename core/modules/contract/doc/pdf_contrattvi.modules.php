@@ -295,7 +295,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 					
-					$pdf->SetXY(30, 144);
+					$pdf->SetXY(30, 144.2);
 					$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_end))."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 
@@ -306,7 +306,7 @@ class pdf_contrattvi extends ModelePDFContract
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
-				$pdf->SetXY(148, 144.4);
+				$pdf->SetXY(148, 144.2);
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmr'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
