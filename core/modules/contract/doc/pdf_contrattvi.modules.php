@@ -419,7 +419,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$DateInterval = $DtSt->diff($DtEnd);
 					$str=$DateInterval->format('%m');
 					if (empty($str)) {
-						$str=1;
+						$str='ERR';
 					}
 					$str.= ' Mois';
 					$pdf->SetXY(78, 190);
