@@ -386,7 +386,15 @@ class pdf_contrattvi extends ModelePDFContract
 					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->price_ht)."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 				}
-
+				
+				$pdf->SetXY(115, 210);
+				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
+				$pdf->MultiCell(80, 0, $str,0,'L');
+				
+				$pdf->SetXY(115, 230);
+				$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
+				$pdf->MultiCell(80, 0, $str,0,'L');
+								
 				//1er loyer
 				if (!empty($date_cnt_start)) {
 					$first_day_of_month=dol_mktime(0, 0, 0, dol_print_date($date_cnt_start, '%m'), 1, dol_print_date($date_cnt_start, '%Y'));
