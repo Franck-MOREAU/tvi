@@ -416,8 +416,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$DtEnd->setTimestamp($date_cnt_end);
 					
 					$DateInterval = $DtEnd->diff($DtSt);
-					$str=$DateInterval->format('%d/%m/%y');
-					//$str = $DtSt->format('%d/%m/%y');
+					$str=($DateInterval->format('/%y')*12)+$DateInterval->format('/%m');
 					if (empty($str)) {
 						$str='ERR';
 					}
