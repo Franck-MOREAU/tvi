@@ -291,7 +291,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$date_cnt_start = empty($tvi->lines_contract[0]->date_ouverture) ? $tvi->lines_contract[0]->date_ouverture_prevue : $tvi->lines_contract[0]->date_ouverture;
 					$date_cnt_end = empty($tvi->lines_contract[0]->date_cloture) ? $tvi->lines_contract[0]->date_fin_validite : $tvi->lines_contract[0]->date_cloture;
 
-					$pdf->SetXY(30, 136.2);
+					$pdf->SetXY(30, 136.4);
 					$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 					
@@ -302,11 +302,11 @@ class pdf_contrattvi extends ModelePDFContract
 					$loyer=$tvi->lines_contract[0]->price_ht;
 				}
 				
-				$pdf->SetXY(147, 136.4);
+				$pdf->SetXY(148, 136.4);
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
-				$pdf->SetXY(123, 144);
+				$pdf->SetXY(148, 144.4);
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmr'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
