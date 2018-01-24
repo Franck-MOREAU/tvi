@@ -417,7 +417,7 @@ class pdf_contrattvi extends ModelePDFContract
 					
 					$DateInterval = $DtEnd->diff($DtSt);
 					//$str=$DateInterval->format('%d');
-					$str = $DtEnd->format('%d/%m/%y');
+					$str = $DtSt->format('%d/%m/%y');
 					if (empty($str)) {
 						$str='ERR';
 					}
