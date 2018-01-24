@@ -391,7 +391,7 @@ class pdf_contrattvi extends ModelePDFContract
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
-				$pdf->SetXY(153, 173.8);
+				$pdf->SetXY(152, 173.8);
 				$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 								
