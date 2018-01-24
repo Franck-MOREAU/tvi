@@ -302,7 +302,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$loyer=$tvi->lines_contract[0]->price_ht;
 				}
 				
-				$pdf->SetXY(150, 136.2);
+				$pdf->SetXY(145, 136.2);
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
