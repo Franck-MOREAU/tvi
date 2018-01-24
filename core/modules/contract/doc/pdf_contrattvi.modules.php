@@ -227,16 +227,16 @@ class pdf_contrattvi extends ModelePDFContract
 
 				//Carac client
 				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(23, 71.5);
+				$pdf->SetXY(23, 71.3);
 				$adress = $outputlangs->convToOutputCharset($object->thirdparty->name)."\n";
 				$adress .= $outputlangs->convToOutputCharset(dol_format_address($object->thirdparty));
 				$pdf->MultiCell(80, 4, $adress,0,'L');
 
-				$pdf->SetXY(19, 91.6);
+				$pdf->SetXY(19, 91.7);
 				$str = $outputlangs->convToOutputCharset($object->thirdparty->idprof2)."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
-				$pdf->SetXY(63, 91.6);
+				$pdf->SetXY(63, 91.7);
 				$str = $outputlangs->convToOutputCharset($object->thirdparty->phone)."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
