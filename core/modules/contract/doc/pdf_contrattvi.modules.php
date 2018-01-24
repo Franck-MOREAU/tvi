@@ -232,11 +232,11 @@ class pdf_contrattvi extends ModelePDFContract
 				$adress .= $outputlangs->convToOutputCharset(dol_format_address($object->thirdparty));
 				$pdf->MultiCell(80, 4, $adress,0,'L');
 
-				$pdf->SetXY(18, 91.5);
+				$pdf->SetXY(19, 91.6);
 				$str = $outputlangs->convToOutputCharset($object->thirdparty->idprof2)."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
-				$pdf->SetXY(63, 91.5);
+				$pdf->SetXY(63, 91.6);
 				$str = $outputlangs->convToOutputCharset($object->thirdparty->phone)."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
