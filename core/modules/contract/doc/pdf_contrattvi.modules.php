@@ -472,9 +472,18 @@ class pdf_contrattvi extends ModelePDFContract
 					$pdf->SetXY(128,210);
 					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->price_ht.' €');
 					$pdf->MultiCell(80, 0, $str,0,'L');
+					
+					$pdf->SetXY(152, 210);
+					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->desc)."\n";
+					$pdf->MultiCell(80, 0, $str,0,'L');
+					
 				} elseif (count($tvi->lines_contract)>0 && $tvi->lines_contract[0]->price_ht==0) {
 					$pdf->SetXY(128,210);
 					$str = $outputlangs->convToOutputCharset('"Inclus"');
+					$pdf->MultiCell(80, 0, $str,0,'L');
+					
+					$pdf->SetXY(152, 210);
+					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->desc)."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 				} else {
 					$pdf->SetXY(128,210);
