@@ -391,7 +391,7 @@ class pdf_contrattvi extends ModelePDFContract
 				$str = $outputlangs->convToOutputCharset($object->array_options['options_kmd'])."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 				
-				$pdf->SetXY(152, 173.8);
+				$pdf->SetXY(153, 173.8);
 				$str = $outputlangs->convToOutputCharset(dol_print_date($date_cnt_start))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 								
@@ -473,7 +473,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->price_ht.' €');
 					$pdf->MultiCell(80, 0, $str,0,'L');
 					
-					$pdf->SetXY(152, 210);
+					$pdf->SetXY(154, 210);
 					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->desc)."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 					
@@ -482,7 +482,7 @@ class pdf_contrattvi extends ModelePDFContract
 					$str = $outputlangs->convToOutputCharset('"Inclus"');
 					$pdf->MultiCell(80, 0, $str,0,'L');
 					
-					$pdf->SetXY(152, 210);
+					$pdf->SetXY(154, 210);
 					$str = $outputlangs->convToOutputCharset($tvi->lines_contract[0]->desc)."\n";
 					$pdf->MultiCell(80, 0, $str,0,'L');
 				} else {
