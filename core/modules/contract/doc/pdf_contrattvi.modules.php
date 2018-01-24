@@ -262,11 +262,11 @@ class pdf_contrattvi extends ModelePDFContract
 				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('marque', $vh->marque))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
-				$pdf->SetXY(38, 119.5);
+				$pdf->SetXY(38, 119.7);
 				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('immat', $vh->immat))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
-				$pdf->SetXY(123, 119.5);
+				$pdf->SetXY(123, 119.7);
 				$str = $outputlangs->convToOutputCharset($extrafields->showOutputField('chassis', $vh->chassis))."\n";
 				$pdf->MultiCell(80, 0, $str,0,'L');
 
