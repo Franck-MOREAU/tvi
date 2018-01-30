@@ -1359,7 +1359,7 @@ else
 			$morehtmlref.='<input type="hidden" name="attribute" value="typ_contract">';
 			$morehtmlref.='<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			$morehtmlref.='<input type="hidden" name="id" value="' . $object->id . '">';
-			$morehtmlref.= $extrafields->showInputField('typ_contract', $object->array_options['options_typ_contract'], '', '', '', 0, $object->id);
+			$morehtmlref.= $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showInputField('typ_contract', $object->array_options['options_typ_contract'], '', '', '', 0, $object->id);
 			$morehtmlref.='<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
 			$morehtmlref.='</form>';
 		}else{
@@ -1385,7 +1385,7 @@ else
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
-		print '</td><td>';
+		print '</td><td colspan="3">';
 		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
 		print '</td>';
 		print '</tr>';
@@ -1394,15 +1394,51 @@ else
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $langs->trans('customer');
-		print '</td><td>';
+		print '</td><td colspan="3">';
 		print $object->thirdparty->getNomUrl(1) . '<br>';
 		print $object->thirdparty->getBannerAddress('adresse', $object);
 		print '</td>';
 		print '</tr>';
 
-		// Other attributes
-		$cols = 3;
-		include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_view.tpl.php';
+		print '<tr>';
+		print '<td class="titlefield">';
+		print $extrafields->attribute_label['frequency'];
+		if($action == 'edit_extras' && $attribute == 'frequency'){
+			print '</td><td>';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="frequency">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $extrafields->showInputField('frequency', $object->array_options['options_frequency'], '', '', '', 0, $object->id);
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=frequency">' . img_edit().'</a>';
+			print '</td><td>';
+			print $extrafields->showOutputField('frequency', $object->array_options['options_frequency']);
+		}
+		print '</td>';
+		
+		print '<td class="titlefield">';
+		print $extrafields->attribute_label['unit_frequency'];
+		if($action == 'edit_extras' && $attribute == 'unit_frequency'){
+			print '</td><td>';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="unit_frequency">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $extrafields->showInputField('unit_frequency', $object->array_options['options_unit_frequency'], '', '', '', 0, $object->id);
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=unit_frequency">' . img_edit().'</a>';
+			print '</td><td>';
+			print $extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']);
+		}
+		print '</td>';
+		print '</tr>';
 
 		print "</table>";
 
