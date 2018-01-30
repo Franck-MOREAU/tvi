@@ -103,22 +103,28 @@ class ActionsTvi // extends CommonObject
 		$confirm = GETPOST('confirm','alpha');
 		$current_context = explode(':', $parameters['context']);
 
-		if (in_array('contractcard', $current_context) && $action=='activall') {
+		if (in_array('contractcard', $current_context)) {
+			$url = dol_buildpath('/tvi/form/contract/card.php?id=' .$object->id);
+			header("Location: ". $url);
+			exit;
+		}
+		
+// 		if (in_array('contractcard', $current_context) && $action=='activall') {
 
-			foreach($object->lines as $line) {
+// 			foreach($object->lines as $line) {
 
-				if ($line->date_ouverture_prevue<=dol_now() && dol_now()<=$line->date_fin_validite) {
-					$result = $object->active_line($user, $line->id, $line->date_ouverture_prevue, $line->date_fin_validite, '');
-					if ($result<0) {
-						setEventMessages($object->error, $object->errors,'errors');
-					}
-				}
-			}
-		} 
+// 				if ($line->date_ouverture_prevue<=dol_now() && dol_now()<=$line->date_fin_validite) {
+// 					$result = $object->active_line($user, $line->id, $line->date_ouverture_prevue, $line->date_fin_validite, '');
+// 					if ($result<0) {
+// 						setEventMessages($object->error, $object->errors,'errors');
+// 					}
+// 				}
+// 			}
+// 		} 
 		return 0;
 	}
 
-
+	
 	/**
 	 * formConfirm Method Hook Call
 	 *
