@@ -1044,7 +1044,6 @@ llxHeader('',$langs->trans("Contract"),"");
 
 $form = new Form($db);
 $formfile = new FormFile($db);
-if (! empty($conf->projet->enabled)) $formproject = new FormProjets($db);
 
 $objectlignestatic=new ContratLigne($db);
 
