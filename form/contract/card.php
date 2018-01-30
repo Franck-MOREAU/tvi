@@ -90,6 +90,7 @@ $extralabelslines=$extrafieldsline->fetch_name_optionals_label($object->table_el
 $permissionnote=$user->rights->contrat->creer;	// Used by the include of actions_setnotes.inc.php
 $permissiondellink=$user->rights->contrat->creer;	// Used by the include of actions_dellink.inc.php
 
+$vh = new Vehicules($db);
 
 /*
  * Actions
@@ -1396,9 +1397,7 @@ else
 		}
 		print '</td>';
 		print '</tr>';
-		
-		$vh = new Vehicules($db);
-		
+					
 		print '<td colspan="3">';
 		print $extrafields->attribute_label['vehicule'];
 		if($action == 'edit_extras' && $attribute == 'vehicule'){
