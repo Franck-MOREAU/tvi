@@ -1365,7 +1365,7 @@ else
 		}else{
 		    $morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ' ';
 		    $morehtmlref.= ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
-		    $morehtmlref.= ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
+		    $morehtmlref.= ' : ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 			
 		}
 		$morehtmlref.='</div>';
@@ -1380,22 +1380,23 @@ else
 		print '<table class="border" width="100%">';
 
 		// Ligne info remises tiers
-		print '<tr><td class="titlefield">'.$langs->trans('Discount').'</td><td colspan="3">';
-		if ($object->thirdparty->remise_percent) print $langs->trans("CompanyHasRelativeDiscount",$object->thirdparty->remise_percent);
-		else print 'ca marche';
-		$absolute_discount=$object->thirdparty->getAvailableDiscounts();
-		print '. ';
-		if ($absolute_discount) print $langs->trans("CompanyHasAbsoluteDiscount",price($absolute_discount),$langs->trans("Currency".$conf->currency));
-		else print $langs->trans("CompanyHasNoAbsoluteDiscount");
-		print '.';
-		print '</td></tr>';
-
+		
 		// Date
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
 		print '</td><td>';
 		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
+		print '</td>';
+		print '</tr>';
+		
+		// Date
+		print '<tr>';
+		print '<td class="titlefield">';
+		print $langs->trans('customer');
+		print '</td><td>';
+		print $object->thirdparty->getNomUrl(1) . '<br>';
+		print $object->thirdparty->getBannerAddress('adresse', $object);
 		print '</td>';
 		print '</tr>';
 
