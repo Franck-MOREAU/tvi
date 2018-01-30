@@ -1351,7 +1351,7 @@ else
 		$morehtmlref.=$form->editfieldkey("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', 0, 1);
 		$morehtmlref.=$form->editfieldval("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', null, null, '', 1);
 		// Thirdparty
-		$morehtmlref.='<br>'. $extrafields->attribute_label['options_typ_contract'] . ': ' . $extrafields->showOutputField('options_typ_contract', $object->array_options['options_typ_contract']);
+		$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 		
 		// Project
 		if (! empty($conf->projet->enabled))
