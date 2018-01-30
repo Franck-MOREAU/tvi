@@ -79,7 +79,7 @@ class ActionsTvi // extends CommonObject
 
 		$current_context = explode(':', $parameters['context']);
 		if (in_array('contractcard', $current_context)) {
-			$this->resprint = 'insertion hook';
+			$this->resPrint= 'insertion hook';
 
 		}
 
