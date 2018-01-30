@@ -1379,6 +1379,9 @@ else
 		    $morehtmlref.= ' : ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 			
 		}
+		$morehtmlref.='<br>'. $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer) . ': ';
+		$morehtmlref.= $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
+		
 		$morehtmlref.='</div>';
 
 		dol_banner_tab($object, 'ref', $linkback, 1, 'ref', 'none', $morehtmlref);
@@ -1393,18 +1396,18 @@ else
 		// Ligne info remises tiers
 		
 		// Date
-		print '<tr>';
-		print '<td class="titlefield">';
-		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
-		print '</td><td colspan="2">';
-		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
-		print '</td>';
-		print '</tr>';
+// 		print '<tr>';
+// 		print '<td class="titlefield">';
+// 		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
+// 		print '</td><td colspan="2">';
+// 		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
+// 		print '</td>';
+// 		print '</tr>';
 		
 		// Date
 		print '<tr>';
 		print '<td class="titlefield">';
-		print $langs->trans('customer');
+		print $langs->trans('ThirdParty');
 		print '</td><td colspan="2">';
 		print $object->thirdparty->getNomUrl(1) . '<br>';
 		print $object->thirdparty->getBannerAddress('adresse', $object);
