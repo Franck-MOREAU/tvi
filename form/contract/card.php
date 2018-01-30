@@ -1153,18 +1153,18 @@ if ($action == 'create')
 	print $hookmanager->resPrint;
 
 	// Other attributes
-	print '<tr><td>';
+	print '<tr><td class="fieldrequired">';
 	print $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showInputField('typ_contract', '');
 	print '</td><td>';
 	print '</td></tr>';
 	
-	print '<tr><td>';
+	print '<tr><td class="fieldrequired">';
 	print $extrafields->attribute_label['frequency'] . ': ' . $extrafields->showInputField('frequency', '');
-	print '</td><td>';
+	print '</td><td class="fieldrequired">';
 	print $extrafields->attribute_label['unit_frequency'] . ': ' . $extrafields->showInputField('unit_frequency', '');
 	print '</td></tr>';
 
-	print '<tr><td>';
+	print '<tr><td class="fieldrequired">';
 	print $extrafields->attribute_label['date_when'] . ': ' . $extrafields->showInputField('date_when', '');
 	print '</td><td>';
 	print $extrafields->attribute_label['kmsup'] . ': ' . $extrafields->showInputField('kmsup', '') .' Km';
