@@ -60,6 +60,7 @@ $id = GETPOST('id','int');
 $ref=GETPOST('ref','alpha');
 $origin=GETPOST('origin','alpha');
 $originid=GETPOST('originid','int');
+$attribute=GETPOST('attribute');
 
 $datecontrat='';
 $usehm=(! empty($conf->global->MAIN_USE_HOURMIN_IN_DATE_RANGE)?$conf->global->MAIN_USE_HOURMIN_IN_DATE_RANGE:0);
@@ -1358,37 +1359,7 @@ else
 		$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 		$morehtmlref.= ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
 		// Project
-		if (! empty($conf->projet->enabled))
-		{
-			$langs->load("projects");
-			$morehtmlref.='<br>'.$langs->trans('Project') . ' ';
-			if ($user->rights->contrat->creer)
-			{
-				if ($action != 'classify')
-					$morehtmlref.='<a href="' . $_SERVER['PHP_SELF'] . '?action=classify&amp;id=' . $object->id . '">' . img_edit($langs->transnoentitiesnoconv('SetProject')) . '</a> : ';
-					if ($action == 'classify') {
-						//$morehtmlref.=$form->form_project($_SERVER['PHP_SELF'] . '?id=' . $object->id, $object->socid, $object->fk_project, 'projectid', 0, 0, 1, 1);
-						$morehtmlref.='<form method="post" action="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'">';
-						$morehtmlref.='<input type="hidden" name="action" value="classin">';
-						$morehtmlref.='<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
-						$morehtmlref.=$formproject->select_projects($object->thirdparty->id, $object->fk_project, 'projectid', $maxlength, 0, 1, 0, 1, 0, 0, '', 1);
-						$morehtmlref.='<input type="submit" class="button valignmiddle" value="'.$langs->trans("Modify").'">';
-						$morehtmlref.='</form>';
-					} else {
-						$morehtmlref.=$form->form_project($_SERVER['PHP_SELF'] . '?id=' . $object->id, $object->thirdparty->id, $object->fk_project, 'none', 0, 0, 0, 1);
-					}
-			} else {
-				if (! empty($object->fk_project)) {
-					$proj = new Project($db);
-					$proj->fetch($object->fk_project);
-					$morehtmlref.='<a href="'.DOL_URL_ROOT.'/projet/card.php?id=' . $object->fk_project . '" title="' . $langs->trans('ShowProject') . '">';
-					$morehtmlref.=$proj->ref;
-					$morehtmlref.='</a>';
-				} else {
-					$morehtmlref.='';
-				}
-			}
-		}
+		
 		$morehtmlref.='</div>';
 
 
