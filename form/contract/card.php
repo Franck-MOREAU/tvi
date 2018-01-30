@@ -1166,9 +1166,18 @@ if ($action == 'create')
 	print '<tr><td>';
 	print $extrafields->attribute_label['date_when'] . ': ' . $extrafields->showInputField('date_when', '');
 	print '</td><td>';
-	print $extrafields->attribute_label['kmsup'] . ': ' . $extrafields->showInputField('kmsup', '');
+	print $extrafields->attribute_label['kmsup'] . ': ' . $extrafields->showInputField('kmsup', '') .' Km';
 	print '</td></tr>';
 	
+	print '<tr><td Colspan="2">';
+	print $extrafields->attribute_label['vehicule'] . ': ' . $vh->select_vehicule('options_vehicule','');
+	print '</td></tr>';
+	
+	print '<tr><td>';
+	print $extrafields->attribute_label['kmd'] . ': ' . $extrafields->showInputField('kmd', '') .' Km';
+	print '</td><td>';
+	print $extrafields->attribute_label['kmr'] . ': ' . $extrafields->showInputField('kmr', '') .' Km';
+	print '</td></tr>';
 	
 	print "</table>\n";
 
@@ -1391,7 +1400,7 @@ else
 		$vh = new Vehicules($db);
 		
 		print '<td colspan="3">';
-		print 'Vehicule';
+		print $extrafields->attribute_label['vehicule'];
 		if($action == 'edit_extras' && $attribute == 'vehicule'){
 			print ': ';
 			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
