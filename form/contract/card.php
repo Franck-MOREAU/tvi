@@ -1163,6 +1163,13 @@ if ($action == 'create')
 	print $extrafields->attribute_label['unit_frequency'] . ': ' . $extrafields->showInputField('unit_frequency', '');
 	print '</td></tr>';
 
+	print '<tr><td>';
+	print $extrafields->attribute_label['date_when'] . ': ' . $extrafields->showInputField('date_when', '');
+	print '</td><td>';
+	print $extrafields->attribute_label['kmsup'] . ': ' . $extrafields->showInputField('kmsup', '');
+	print '</td></tr>';
+	
+	
 	print "</table>\n";
 
 	dol_fiche_end();
