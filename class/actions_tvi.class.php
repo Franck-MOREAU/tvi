@@ -80,7 +80,11 @@ class ActionsTvi // extends CommonObject
 		$current_context = explode(':', $parameters['context']);
 
 		if (in_array('contractcard', $current_context)) {
-			$url = dol_buildpath('/tvi/form/contract/card.php?id=' .$object->id . '&action=' . $action,2);
+			foreach ($_POST as $key=>$val){
+				$param.= '&'.$key.'='.$val;
+			}
+			
+			$url = dol_buildpath('/tvi/form/contract/card.php?id=' .$object->id . $param,2);
 			header("Location: ". $url);
 			exit;
 		}
