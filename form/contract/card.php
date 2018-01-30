@@ -1455,11 +1455,26 @@ else
 		
 		$vh = new Vehicules($db);
 		
-		print '<td class="titlefield">';
+		print '<td colspan="3">';
 		print 'véhicule';
-		print '</td><td colspan="2">' . $vh->print_vehicule_details($object->array_options['options_vehicule']) . '</td>';
+		if($action == 'edit_extras' && $attribute == 'vehicule'){
+			print ': ';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="vehicule">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $vh->select_vehicule('options_vehicule',$object->array_options['options_vehicule']);
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=vehicule">' . img_edit().'</a>';
+			print ': ';
+			print $vh->print_vehicule_details($object->array_options['options_vehicule']);
+		}
+		print '</td>';
 		print '</tr>';
-				
+									
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $extrafields->attribute_label['kmsup'];
