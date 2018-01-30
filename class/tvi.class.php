@@ -1177,3 +1177,101 @@ class Tvi extends CommonObject
 	}
 
 }
+
+class Vehicules extends CommonObject
+{	
+	var $db; // !< To store db handler
+	var $error; // !< To return error code (or message)
+	var $errors = array (); // !< To return several error codes (or messages)
+	var $element = 'vehicules'; // !< Id that identify managed objects
+	var $table_element = 'tvi_vehicules';
+	
+	
+	Public $id;
+	Public $parc;
+	public $type;
+	public $immat;
+	public $chassis;
+	public $marque;
+	public $active;
+	
+	
+	function create($user, $notrigger = 0) {
+		global $conf, $langs;
+		$error = 0;
+		
+		// Clean parameters
+		
+		if (isset($this->parc))
+			$this->parc = trim($this->parc);
+		if (isset($this->type))
+			$this->type = trim($this->type);
+		if (isset($this->immat))
+			$this->immat = trim($this->immat);
+		if (isset($this->chassis))
+			$this->chassis = trim($this->chassis);
+		if (isset($this->marque))
+			$this->marque = trim($this->marque);
+		if (isset($this->active))
+			$this->active = trim($this->actvie);
+		
+		// Check parameters
+		if (empty($this->parc)) {
+			$error ++;
+			$this->errors[] = 'Saisie du N° de parc obligatoire';
+		}
+		if (empty($this->type)) {
+			$error ++;
+			$this->errors[] = 'Saisie du type obligatoire';
+		}
+		if (empty($this->immat)) {
+			$error ++;
+			$this->errors[] = "Saisie de l'immatriculation obligatoire";
+		}
+		if (empty($this->chassis)) {
+			$error ++;
+			$this->errors[] = "saisie du N° de chassis obligatoire";
+		}
+		if (empty($this->marque)) {
+			$error ++;
+			$this->errors[] = "Saisie de la marque obligatoire";
+		}
+		
+		
+		if (! $error) {
+			// Insert request
+			$sql = "INSERT INTO " . MAIN_DB_PREFIX . $this->table_element . "(";
+			
+			$sql .= "parc, ";
+			$sql .= "type, ";
+			$sql .= "immat, ";
+			$sql .= "chassis, ";
+			$sql .= "marque, ";
+			$sql .= "active";
+			
+			$sql .= ") VALUES (";
+			
+			$sql .= " " . (! isset($this->ref) ? 'NULL' : "'" . $this->db->escape($this->ref) . "'") . ",";
+			$sql .= " " . (! isset($this->fk_user_resp) ? 'NULL' : "'" . $this->fk_user_resp . "'") . ",";
+			$sql .= " " . (! isset($this->fk_soc) ? 'NULL' : "'" . $this->fk_soc . "'") . ",";
+			$sql .= " " . (! isset($this->fk_ctm) ? 'NULL' : "'" . $this->fk_ctm . "'") . ",";
+			$sql .= " " . (! isset($this->fk_c_type) ? 'NULL' : "'" . $this->fk_c_type . "'") . ",";
+			$sql .= " " . (! isset($this->year) ? 'NULL' : "'" . $this->year . "'") . ",";
+			$sql .= " " . (empty($this->description) ? 'NULL' : "'" . $this->db->escape($this->description) . "'") . ",";
+			$sql .= " " . $user->id . ",";
+			$sql .= " '" . $this->db->idate(dol_now()) . "',";
+			$sql .= " " . $user->id . ",";
+			$sql .= " '" . $this->db->idate(dol_now()) . "'";
+			$sql .= ")";
+			
+			$this->db->begin();
+			
+			dol_syslog(get_class($this) . "::create sql=" . $sql, LOG_DEBUG);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+	}
+}
