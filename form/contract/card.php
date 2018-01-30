@@ -1351,17 +1351,22 @@ else
 		// Ref customer
 		$morehtmlref.=$form->editfieldkey("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', 0, 1);
 		$morehtmlref.=$form->editfieldval("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', null, null, '', 1);
-		// Thirdparty
 		
 		if($action == 'edit_extras' && $attribute == 'typ_contract'){
-			$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showInputField('typ_contract', $object->array_options['options_typ_contract']);
+			$morehtmlref.='<br>';
+			$morehtmlref.='<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$morehtmlref.='<input type="hidden" name="action" value="update_extras">';
+			$morehtmlref.='<input type="hidden" name="attribute" value="typ_contract">';
+			$morehtmlref.='<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$morehtmlref.='<input type="hidden" name="id" value="' . $object->id . '">';
+			$morehtmlref.= $extrafields->showInputField('typ_contract', $object->array_options['options_typ_contract'], '', '', '', 0, $object->id);
+			$morehtmlref.='<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			$morehtmlref.='</form>';
+		}else{
+		    $morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
+			$morehtmlref.= ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
 		}
-		$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
-		$morehtmlref.= ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
-		// Project
-		
 		$morehtmlref.='</div>';
-
 
 		dol_banner_tab($object, 'ref', $linkback, 1, 'ref', 'none', $morehtmlref);
 
