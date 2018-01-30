@@ -80,7 +80,7 @@ class ActionsTvi // extends CommonObject
 		$current_context = explode(':', $parameters['context']);
 
 		if (in_array('contractcard', $current_context)) {
-			var_dump($_POST);
+			var_dump($_GET);
 			exit;
 			foreach ($_POST as $key=>$val){
 				$param.= '&'.$key.'='.$val;
