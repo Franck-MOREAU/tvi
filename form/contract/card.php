@@ -38,7 +38,7 @@ dol_include_once('/contrat/class/contrat.class.php');
 dol_include_once('/core/modules/contract/modules_contract.php');
 dol_include_once('/core/class/doleditor.class.php');
 dol_include_once('/core/class/html.formfile.class.php');
-rdol_include_once('/product/class/product.class.php');
+dol_include_once('/product/class/product.class.php');
 dol_include_once('/core/class/extrafields.class.php');
 dol_include_once('/tvi/class/tvi.class.php');
 
