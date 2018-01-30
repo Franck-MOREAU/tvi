@@ -1587,7 +1587,11 @@ class Vehicules extends CommonObject
 	function print_vehicule_details($id){
 		$vh = new Vehicules($this->db);
 		$vh->fetch($id);
-		$out = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+		if(!empty($vh->parc) || !empty($vh->marque) || !empty($vh->type) || !empty($vh->immat) || !empty($vh->chassis)){
+			$out = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+		}else{
+			$out = '';
+		}
 		return $out;
 	}
 	
