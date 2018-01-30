@@ -1153,14 +1153,14 @@ if ($action == 'create')
 
 	// Other attributes
 	print '<tr><td>';
-	print $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', '');
+	print $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showInputField('typ_contract', '');
 	print '</td><td>';
 	print '</td></tr>';
 	
 	print '<tr><td>';
-	print $extrafields->attribute_label['frequency'] . ': ' . $extrafields->showOutputField('frequency', '');
+	print $extrafields->attribute_label['frequency'] . ': ' . $extrafields->showInputField('frequency', '');
 	print '</td><td>';
-	print $extrafields->attribute_label['unit frequency'] . ': ' . $extrafields->showOutputField('unit_frequency', '');
+	print $extrafields->attribute_label['unit frequency'] . ': ' . $extrafields->showInputField('unit_frequency', '');
 	print '</td></tr>';
 
 	print "</table>\n";
