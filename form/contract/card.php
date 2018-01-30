@@ -1160,7 +1160,7 @@ if ($action == 'create')
 	print '<tr><td>';
 	print $extrafields->attribute_label['frequency'] . ': ' . $extrafields->showInputField('frequency', '');
 	print '</td><td>';
-	print $extrafields->attribute_label['unit frequency'] . ': ' . $extrafields->showInputField('unit_frequency', '');
+	print $extrafields->attribute_label['unit_frequency'] . ': ' . $extrafields->showInputField('unit_frequency', '');
 	print '</td></tr>';
 
 	print "</table>\n";
