@@ -2282,7 +2282,7 @@ else
 		$diroutput = $conf->contrat->dir_output;
 		$trackid = 'con'.$object->id;
 
-		include DOL_DOCUMENT_ROOT.'/core/tpl/card_presend.tpl.php';
+		dol_include_once('/core/tpl/card_presend.tpl.php');
 	}
 }
 
