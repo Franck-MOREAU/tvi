@@ -1457,7 +1457,7 @@ else
 		
 		print '<td class="titlefield">';
 		print 'véhicule';
-		print '</td>' . $vh->print_vehicule_details($object->array_options['options_vehicule']) . '<td colspan="2">';
+		print '</td><td colspan="2">' . $vh->print_vehicule_details($object->array_options['options_vehicule']) . '</td>';
 		print '</tr>';
 				
 		print '<tr>';
