@@ -1067,52 +1067,11 @@ if ($action == 'create')
 
 	$soc = new Societe($db);
 	if ($socid>0) $soc->fetch($socid);
-
-	if (GETPOST('origin') && GETPOST('originid'))
-	{
-		// Parse element/subelement (ex: project_task)
-		$element = $subelement = GETPOST('origin');
-		if (preg_match('/^([^_]+)_([^_]+)/i',GETPOST('origin'),$regs))
-		{
-			$element = $regs[1];
-			$subelement = $regs[2];
-		}
-
-		if ($element == 'project')
-		{
-			$projectid=GETPOST('originid');
-		}
-		else
-		{
-			// For compatibility
-			if ($element == 'order' || $element == 'commande')    { $element = $subelement = 'commande'; }
-			if ($element == 'propal')   { $element = 'comm/propal'; $subelement = 'propal'; }
-
-			dol_include_once('/'.$element.'/class/'.$subelement.'.class.php');
-
-			$classname = ucfirst($subelement);
-			$objectsrc = new $classname($db);
-			$objectsrc->fetch(GETPOST('originid'));
-			if (empty($objectsrc->lines) && method_exists($objectsrc,'fetch_lines'))  $objectsrc->fetch_lines();
-			$objectsrc->fetch_thirdparty();
-
-			$projectid          = (!empty($objectsrc->fk_project)?$objectsrc->fk_project:'');
-
-			$soc = $objectsrc->thirdparty;
-
-			$note_private		= (! empty($objectsrc->note_private) ? $objectsrc->note_private : '');
-			$note_public		= (! empty($objectsrc->note_public) ? $objectsrc->note_public : '');
-
-			// Object source contacts list
-			$srccontactslist = $objectsrc->liste_contact(-1,'external',1);
-		}
-	}
-	else {
-		$projectid = GETPOST('projectid','int');
-		$note_private = GETPOST("note_private");
-		$note_public = GETPOST("note_public");
-	}
-
+	
+	$projectid = GETPOST('projectid','int');
+	$note_private = GETPOST("note_private");
+	$note_public = GETPOST("note_public");
+	
 	$object->date_contrat = dol_now();
 
 	print '<form name="form_contract" action="'.$_SERVER["PHP_SELF"].'" method="post">';
@@ -1163,20 +1122,6 @@ if ($action == 'create')
 	}
 	print '</tr>'."\n";
 
-	if($socid>0)
-	{
-		// Ligne info remises tiers
-		print '<tr><td>'.$langs->trans('Discounts').'</td><td>';
-		if ($soc->remise_percent) print $langs->trans("CompanyHasRelativeDiscount",$soc->remise_percent);
-		else print $langs->trans("CompanyHasNoRelativeDiscount");
-		print '. ';
-		$absolute_discount=$soc->getAvailableDiscounts();
-		if ($absolute_discount) print $langs->trans("CompanyHasAbsoluteDiscount",price($absolute_discount),$langs->trans("Currency".$conf->currency));
-		else print $langs->trans("CompanyHasNoAbsoluteDiscount");
-		print '.';
-		print '</td></tr>';
-	}
-
 	// Commercial suivi
 	print '<tr><td class="nowrap"><span class="fieldrequired">'.$langs->trans("TypeContact_contrat_internal_SALESREPFOLL").'</span></td><td>';
 	print $form->select_dolusers(GETPOST("commercial_suivi_id")?GETPOST("commercial_suivi_id"):$user->id,'commercial_suivi_id',1,'');
@@ -1190,16 +1135,6 @@ if ($action == 'create')
 	print '<tr><td><span class="fieldrequired">'.$langs->trans("Date").'</span></td><td>';
 	$form->select_date($datecontrat,'',0,0,'',"contrat");
 	print "</td></tr>";
-
-	// Project
-	if (! empty($conf->projet->enabled))
-	{
-		$formproject=new FormProjets($db);
-
-		print '<tr><td>'.$langs->trans("Project").'</td><td>';
-		$formproject->select_projects(($soc->id>0?$soc->id:-1),$projectid,"projectid",0,0,1,1);
-		print "</td></tr>";
-	}
 
 	print '<tr><td>'.$langs->trans("NotePublic").'</td><td class="tdtop">';
 	$doleditor=new DolEditor('note_public', $note_public, '', '100', 'dolibarr_notes', 'In', 1, true, true, ROWS_3, '90%');
@@ -1233,17 +1168,6 @@ if ($action == 'create')
 	print '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	print '<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
 	print '</div>';
-
-	if (is_object($objectsrc))
-	{
-		print '<input type="hidden" name="origin"         value="'.$objectsrc->element.'">';
-		print '<input type="hidden" name="originid"       value="'.$objectsrc->id.'">';
-
-		if (empty($conf->global->CONTRACT_SUPPORT_PRODUCTS))
-		{
-			print '<br>'.$langs->trans("Note").': '.$langs->trans("OnlyLinesWithTypeServiceAreUsed");
-		}
-	}
 
 	print "</form>\n";
 }
