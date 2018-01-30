@@ -1088,60 +1088,58 @@ if ($action == 'create')
 	print '<table class="border" width="100%">';
 
 	// Ref
-	print '<tr><td class="fieldrequired">'.$langs->trans('Ref').'</td><td>';
+	print '<tr><td class="fieldrequired">'.$langs->trans('Ref').': ';
 	if (! empty($modCodeContract->code_auto)) {
 		$tmpcode=$langs->trans("Draft");
 	} else {
 		$tmpcode='<input name="ref" class="maxwidth100" maxlength="128" value="'.dol_escape_htmltag(GETPOST('ref')?GETPOST('ref'):$tmpcode).'">';
 	}
 	print $tmpcode;
-	print '</td></tr>';
+	print '</td>';
 
 	// Ref customer
-	print '<tr><td>'.$langs->trans('RefCustomer').'</td>';
-	print '<td><input type="text" class="maxwidth150" name="ref_customer" id="ref_customer" value="'.dol_escape_htmltag(GETPOST('ref_customer','alpha')).'"></td></tr>';
+	print '<td>'.$langs->trans('RefCustomer').': ';
+	print '<input type="text" class="maxwidth150" name="ref_customer" id="ref_customer" value="'.dol_escape_htmltag(GETPOST('ref_customer','alpha')).'"></td></tr>';
 
 	// Thirdparty
 	print '<tr>';
-	print '<td class="fieldrequired">'.$langs->trans('ThirdParty').'</td>';
+	print '<td colspan="2" class="fieldrequired">'.$langs->trans('ThirdParty').' :';
 	if ($socid>0)
 	{
-		print '<td>';
 		print $soc->getNomUrl(1);
 		print '<input type="hidden" name="socid" value="'.$soc->id.'">';
-		print '</td>';
+		
 	}
 	else
 	{
-		print '<td>';
 		print $form->select_company('', 'socid', '', 'SelectThirdParty', 1, 0, null, 0, 'minwidth300');
 		print ' <a href="'.DOL_URL_ROOT.'/societe/card.php?action=create&backtopage='.urlencode($_SERVER["PHP_SELF"].'?action=create').'">'.$langs->trans("AddThirdParty").'</a>';
-		print '</td>';
 	}
+	print '</td>';
 	print '</tr>'."\n";
 
 	// Commercial suivi
-	print '<tr><td class="nowrap"><span class="fieldrequired">'.$langs->trans("TypeContact_contrat_internal_SALESREPFOLL").'</span></td><td>';
+	print '<tr><td class="nowrap"><span class="fieldrequired">'.$langs->trans("TypeContact_contrat_internal_SALESREPFOLL").'</span>: ';
 	print $form->select_dolusers(GETPOST("commercial_suivi_id")?GETPOST("commercial_suivi_id"):$user->id,'commercial_suivi_id',1,'');
-	print '</td></tr>';
+	print '</td>';
 
 	// Commercial signature
-	print '<tr><td class="nowrap"><span class="fieldrequired">'.$langs->trans("TypeContact_contrat_internal_SALESREPSIGN").'</span></td><td>';
+	print '<td class="nowrap"><span class="fieldrequired">'.$langs->trans("TypeContact_contrat_internal_SALESREPSIGN").'</span>: ';
 	print $form->select_dolusers(GETPOST("commercial_signature_id")?GETPOST("commercial_signature_id"):$user->id,'commercial_signature_id',1,'');
 	print '</td></tr>';
 
-	print '<tr><td><span class="fieldrequired">'.$langs->trans("Date").'</span></td><td>';
+	print '<tr><td colspan="2" ><span class="fieldrequired">'.$langs->trans("Date").'</span>: ';
 	$form->select_date($datecontrat,'',0,0,'',"contrat");
 	print "</td></tr>";
 
-	print '<tr><td>'.$langs->trans("NotePublic").'</td><td class="tdtop">';
+	print '<tr><td colspan="2" class="tdtop">'.$langs->trans("NotePublic").': ';
 	$doleditor=new DolEditor('note_public', $note_public, '', '100', 'dolibarr_notes', 'In', 1, true, true, ROWS_3, '90%');
 	print $doleditor->Create(1);
 	print '</td></tr>';
 
 	if (empty($user->societe_id))
 	{
-		print '<tr><td>'.$langs->trans("NotePrivate").'</td><td class="tdtop">';
+		print '<tr><td colspan="2" class="tdtop">'.$langs->trans("NotePrivate").': ';
 		$doleditor=new DolEditor('note_private', $note_private, '', '100', 'dolibarr_notes', 'In', 1, true, true, ROWS_3, '90%');
 		print $doleditor->Create(1);
 		print '</td></tr>';
