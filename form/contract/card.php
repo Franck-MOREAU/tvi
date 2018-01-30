@@ -1100,10 +1100,6 @@ if ($action == 'create')
 	print '<tr><td>'.$langs->trans('RefCustomer').'</td>';
 	print '<td><input type="text" class="maxwidth150" name="ref_customer" id="ref_customer" value="'.dol_escape_htmltag(GETPOST('ref_customer','alpha')).'"></td></tr>';
 
-	// Ref supplier
-	print '<tr><td>'.$langs->trans('RefSupplier').'</td>';
-	print '<td><input type="text" class="maxwidth150" name="ref_supplier" id="ref_supplier" value="'.dol_escape_htmltag(GETPOST('ref_supplier','alpha')).'"></td></tr>';
-
 	// Thirdparty
 	print '<tr>';
 	print '<td class="fieldrequired">'.$langs->trans('ThirdParty').'</td>';
@@ -1156,9 +1152,16 @@ if ($action == 'create')
 	print $hookmanager->resPrint;
 
 	// Other attributes
-	if (empty($reshook) && ! empty($extrafields->attribute_label)) {
-		print $object->showOptionals($extrafields, 'edit');
-	}
+	print '<tr><td>';
+	print $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', '');
+	print '</td><td>';
+	print '</td></tr>';
+	
+	print '<tr><td>';
+	print $extrafields->attribute_label['frequency'] . ': ' . $extrafields->showOutputField('frequency', '');
+	print '</td><td>';
+	print $extrafields->attribute_label['unit frequency'] . ': ' . $extrafields->showOutputField('unit_frequency', '');
+	print '</td></tr>';
 
 	print "</table>\n";
 
