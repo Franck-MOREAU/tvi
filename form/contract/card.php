@@ -1456,7 +1456,7 @@ else
 		$vh = new Vehicules($db);
 		
 		print '<td colspan="3">';
-		print 'véhicule';
+		print 'Vehicule';
 		if($action == 'edit_extras' && $attribute == 'vehicule'){
 			print ': ';
 			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
