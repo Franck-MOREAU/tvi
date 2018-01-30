@@ -1087,7 +1087,7 @@ if ($action == 'create')
 	print '<table class="border" width="100%">';
 
 	// Ref
-	print '<tr><td class="titlefieldcreate fieldrequired">'.$langs->trans('Ref').'</td><td>';
+	print '<tr><td class="fieldrequired">'.$langs->trans('Ref').'</td><td>';
 	if (! empty($modCodeContract->code_auto)) {
 		$tmpcode=$langs->trans("Draft");
 	} else {
