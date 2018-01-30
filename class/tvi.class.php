@@ -1613,7 +1613,7 @@ class Vehicules extends CommonObject
 			}
 			
 			$out.='<select class="flat" name="'.$htmlname.'" id="'.$htmlname.'">';
-			$out.='<option value="0"'.($value=0?'selected':'').'></option>';
+			$out.='<option value="0"'.(empty($value)?'selected':'').'></option>';
 			foreach ($array_out as $id=> $display){
 				$out.='<option value="'.$id.'"'.($value=$id?'selected':'').'>'.$display.'</option>';
 			}
