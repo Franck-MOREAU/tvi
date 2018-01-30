@@ -1468,16 +1468,60 @@ else
 			print '<input type="hidden" name="attribute" value="kmsup">';
 			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			print '<input type="hidden" name="id" value="' . $object->id . '">';
-			print $extrafields->showInputField('kmsup', $object->array_options['options_kmsup'], '', '', '', 0, $object->id);
+			print $extrafields->showInputField('kmsup', $object->array_options['options_kmsup'], '', '', '', 0, $object->id) . ' Km';
 			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
 			print '</form>';
 		}else{
 			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=kmsup">' . img_edit().'</a>';
 			print '</td><td>';
-			print $extrafields->showOutputField('kmsup', $object->array_options['options_kmsup']);
+			print $extrafields->showOutputField('kmsup', $object->array_options['options_kmsup']). ' Km';
 		}
 		print '</td>';
+		print '</tr>';
 		
+		print '<tr>';
+		print '<td class="titlefield">';
+		print 'véhicule';
+		print '</td><td colspan="3">';
+		print '</tr>';
+		
+		print '<tr>';
+		print '<td class="titlefield">';
+		print $extrafields->attribute_label['kmd'];
+		if($action == 'edit_extras' && $attribute == 'kmd'){
+			print '</td><td>';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="kmd">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $extrafields->showInputField('kmd', $object->array_options['options_kmd'], '', '', '', 0, $object->id);
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=kmd">' . img_edit().'</a>';
+			print '</td><td>';
+			print $extrafields->showOutputField('kmd', $object->array_options['options_kmd']);
+		}
+		print '</td>';
+		print '<td class="titlefield">';
+		print $extrafields->attribute_label['kmr'];
+		if($action == 'edit_extras' && $attribute == 'kmr'){
+			print '</td><td>';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="kmr">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $extrafields->showInputField('kmr', $object->array_options['options_kmr'], '', '', '', 0, $object->id) . ' Km';
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=kmr">' . img_edit().'</a>';
+			print '</td><td>';
+			print $extrafields->showOutputField('kmr', $object->array_options['options_kmr']). ' Km';
+		}
+		print '</td>';
 		print '</tr>';
 		
 		print "</table>";
