@@ -1351,8 +1351,12 @@ else
 		$morehtmlref.=$form->editfieldkey("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', 0, 1);
 		$morehtmlref.=$form->editfieldval("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', null, null, '', 1);
 		// Thirdparty
+		
+		if($action == 'edit_extras' && $attribute == 'typ_contract'){
+			$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showInputField('typ_contract', $object->array_options['options_typ_contract']);
+		}
 		$morehtmlref.='<br>'. $extrafields->attribute_label['typ_contract'] . ': ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
-		$morehtmlref.= '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
+		$morehtmlref.= ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=typ_contract">' . img_edit().'</a>';
 		// Project
 		if (! empty($conf->projet->enabled))
 		{
