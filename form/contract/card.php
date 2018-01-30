@@ -1379,7 +1379,7 @@ else
 		    $morehtmlref.= ' : ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 			
 		}
-		$morehtmlref.='<br>'. $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer) . ': ';
+		$morehtmlref.='<br>'. $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datepicker','',0,1) . ': ';
 		$morehtmlref.= $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
 		
 		$morehtmlref.='</div>';
