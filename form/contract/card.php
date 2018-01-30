@@ -1528,7 +1528,6 @@ else
 			print '</form>';
 		}else{
 			print ': <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=kmr">' . img_edit().'</a>';
-			print '</td><td>';
 			print $extrafields->showOutputField('kmr', $object->array_options['options_kmr']). ' Km';
 		}
 		print '</td>';
