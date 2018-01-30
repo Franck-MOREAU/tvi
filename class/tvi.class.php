@@ -1591,7 +1591,7 @@ class Vehicules extends CommonObject
 		return $out;
 	}
 	
-	function select_vehicule($html_name,$value=0){
+	function select_vehicule($htmlname,$value=0){
 		global $conf, $user;
 		$vh = new Vehicules($this->db);
 		$array_filter = array('t.active'=>1);
