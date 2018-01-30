@@ -107,6 +107,17 @@ if (empty($reshook))
 	include DOL_DOCUMENT_ROOT.'/core/actions_setnotes.inc.php';	// Must be include, not includ_once
 
 	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';		// Must be include, not include_once
+	
+	if($action =='activall' && $user->rights->contrat->activer){
+		foreach($object->lines as $line) {
+ 				if ($line->date_ouverture_prevue<=dol_now() && dol_now()<=$line->date_fin_validite) {
+ 					$result = $object->active_line($user, $line->id, $line->date_ouverture_prevue, $line->date_fin_validite, '');
+ 					if ($result<0) {
+					setEventMessages($object->error, $object->errors,'errors');
+				}
+			}
+		}
+	}
 
 	if ($action == 'confirm_active' && $confirm == 'yes' && $user->rights->contrat->activer)
 	{
@@ -2144,7 +2155,21 @@ else
 			$reshook=$hookmanager->executeHooks('addMoreActionsButtons',$parameters,$object,$action);    // Note that $action and $object may have been modified by hook
 
 			if (empty($reshook))
-			{
+			{	
+				$out = '<script type="text/javascript">' . "\n";
+				$out .= '  	$(document).ready(function() {' . "\n";
+				
+				if ($user->rights->contrat->activer && $nbFiles<2) {
+					$out .= '		$a = $(\'<div class="inline-block divButAction"><a class="butAction" href="'.dol_buildpath('/contrat/card.php',2).'?id='.$object->id.'&amp;action=activall">'.$langs->trans("Activer tout les services (dates prévues)").'</a></div>\');' . "\n";
+					$out .= '		$(\'div.fiche div.tabsAction\').first().prepend($a);' . "\n";
+				}
+				
+				$out .= '  	});' . "\n";
+				$out .= '</script>';
+				
+				print $out;
+				
+				
 				// Send
 				if ($object->statut == 1) {
 					if ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) || $user->rights->commande->order_advance->send)) {
