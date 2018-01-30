@@ -1439,7 +1439,28 @@ else
 		}
 		print '</td>';
 		print '</tr>';
-
+		
+		print '<tr>';
+		print '<td class="titlefield">';
+		print $extrafields->attribute_label['date_when'];
+		if($action == 'edit_extras' && $attribute == 'date_when'){
+			print '</td><td colspan="3">';
+			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			print '<input type="hidden" name="action" value="update_extras">';
+			print '<input type="hidden" name="attribute" value="date_when">';
+			print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			print '<input type="hidden" name="id" value="' . $object->id . '">';
+			print $extrafields->showInputField('date_when', $object->array_options['options_date_when'], '', '', '', 0, $object->id);
+			print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			print '</form>';
+		}else{
+			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=date_when">' . img_edit().'</a>';
+			print '</td><td>';
+			print $extrafields->showOutputField('date_when', $object->array_options['options_date_when']);
+		}
+		print '</td>';
+		print '</tr>';
+		
 		print "</table>";
 
 		print '</div>';
