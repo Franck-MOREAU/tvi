@@ -78,8 +78,8 @@ class ActionsTvi // extends CommonObject
 		global $langs, $conf, $user, $db, $bc;
 
 		$current_context = explode(':', $parameters['context']);
-		if (in_array('loancard', $current_context)) {
-
+		if (in_array('contractcard', $current_context)) {
+			print 'insertion hook';
 
 		}
 
