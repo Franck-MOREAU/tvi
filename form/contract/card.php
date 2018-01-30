@@ -1396,7 +1396,7 @@ else
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
-		print '</td><td colspan="3">';
+		print '</td><td colspan="2">';
 		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
 		print '</td>';
 		print '</tr>';
@@ -1405,17 +1405,17 @@ else
 		print '<tr>';
 		print '<td class="titlefield">';
 		print $langs->trans('customer');
-		print '</td><td colspan="3">';
+		print '</td><td colspan="2">';
 		print $object->thirdparty->getNomUrl(1) . '<br>';
 		print $object->thirdparty->getBannerAddress('adresse', $object);
 		print '</td>';
 		print '</tr>';
 
 		print '<tr>';
-		print '<td class="titlefield">';
+		print '<td>';
 		print $extrafields->attribute_label['frequency'];
 		if($action == 'edit_extras' && $attribute == 'frequency'){
-			print '</td><td>';
+			print '<: ';
 			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
 			print '<input type="hidden" name="action" value="update_extras">';
 			print '<input type="hidden" name="attribute" value="frequency">';
@@ -1426,15 +1426,11 @@ else
 			print '</form>';
 		}else{
 			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=frequency">' . img_edit().'</a>';
-			print '</td><td>';
+			print ': ';
 			print $extrafields->showOutputField('frequency', $object->array_options['options_frequency']);
 		}
-		print '</td>';
-		
-		print '<td class="titlefield">';
-		print $extrafields->attribute_label['unit_frequency'];
 		if($action == 'edit_extras' && $attribute == 'unit_frequency'){
-			print '</td><td>';
+			print ' / ';
 			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
 			print '<input type="hidden" name="action" value="update_extras">';
 			print '<input type="hidden" name="attribute" value="unit_frequency">';
@@ -1445,14 +1441,11 @@ else
 			print '</form>';
 		}else{
 			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=unit_frequency">' . img_edit().'</a>';
-			print '</td><td>';
+			print ' / ';
 			print $extrafields->showOutputField('unit_frequency', $object->array_options['options_unit_frequency']);
 		}
 		print '</td>';
-		print '</tr>';
-		
-		print '<tr>';
-		print '<td class="titlefield">';
+		print '<td colspan="2">';
 		print $extrafields->attribute_label['date_when'];
 		if($action == 'edit_extras' && $attribute == 'date_when'){
 			print '</td><td>';
@@ -1470,10 +1463,18 @@ else
 			print $extrafields->showOutputField('date_when', $object->array_options['options_date_when']);
 		}
 		print '</td>';
+		print '</tr>';
+		
+		print '<td class="titlefield">';
+		print 'véhicule';
+		print '</td><td colspan="2">';
+		print '</tr>';
+				
+		print '<tr>';
 		print '<td class="titlefield">';
 		print $extrafields->attribute_label['kmsup'];
 		if($action == 'edit_extras' && $attribute == 'kmsup'){
-			print '</td><td>';
+			print ': ';
 			print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
 			print '<input type="hidden" name="action" value="update_extras">';
 			print '<input type="hidden" name="attribute" value="kmsup">';
@@ -1484,20 +1485,12 @@ else
 			print '</form>';
 		}else{
 			print ' <a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=kmsup">' . img_edit().'</a>';
-			print '</td><td>';
+			print ': ';
 			print $extrafields->showOutputField('kmsup', $object->array_options['options_kmsup']). ' Km';
 		}
 		print '</td>';
-		print '</tr>';
 		
-		print '<tr>';
-		print '<td class="titlefield">';
-		print 'véhicule';
-		print '</td><td colspan="3">';
-		print '</tr>';
-		
-		print '<tr>';
-		print '<td colspan="2">';
+		print '<td>';
 		print $extrafields->attribute_label['kmd'];
 		if($action == 'edit_extras' && $attribute == 'kmd'){
 			print ': ';
@@ -1514,7 +1507,8 @@ else
 			print $extrafields->showOutputField('kmd', $object->array_options['options_kmd']) . ' Km';
 		}
 		print '</td>';
-		print '<td colspan="2">';
+		
+		print '<td>';
 		print $extrafields->attribute_label['kmr'];
 		if($action == 'edit_extras' && $attribute == 'kmr'){
 			print ': ';
