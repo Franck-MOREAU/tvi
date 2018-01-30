@@ -76,10 +76,10 @@ class ActionsTvi // extends CommonObject
 	 */
 	function formObjectOptions($parameters, &$object, &$action, $hookmanager) {
 		global $langs, $conf, $user, $db, $bc;
-		$this->resPrint= 'insertion hook';
+		$this->resprint= 'insertion hook';
 		$current_context = explode(':', $parameters['context']);
 		if (in_array('contractcard', $current_context)) {
-			
+			$this->resprint= 'insertion hook';
 
 		}
 
