@@ -1587,19 +1587,19 @@ class Vehicules extends CommonObject
 	function print_vehicule_details($id){
 		$vh = new Vehicules($this->db);
 		$vh->fetch($id);
-		$out = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+		$out = '<div>'. $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis . '</div>';
 		return $out;
 	}
 	
 	function select_vehicule($html_name,$value=0){
 		global $conf, $user;
 		$vh = new Vehicules($this->db);
-		$array_filter = array('active'=>1);
+		$array_filter = array('t.active'=>1);
 		$num=$vh->fetch_all('ASC', 'parc', 0, 0,$array_filter);
 		if($num > 0){
 			$array_out=array();
 			foreach ($vh->lines as $line){
-				$array_out[$vh->id] = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+				$array_out[$line->id] = $line->parc . ' - ' . $line->marque . ' - ' . $line->type . ' - ' . $line->immat . ' - ' . $line->chassis;
 			}
 			dol_include_once('/core/class/html.form.class.php');
 			
