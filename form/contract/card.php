@@ -1171,7 +1171,7 @@ if ($action == 'create')
 	print '</td></tr>';
 	
 	print '<tr><td Colspan="2">';
-	print $extrafields->attribute_label['vehicule'] . ': ' . $vh->select_vehicule('options_vehicule','');
+	print $extrafields->attribute_label['vehicule'] . ': ' . $vh->select_vehicule('options_vehicule','0');
 	print '</td></tr>';
 	
 	print '<tr><td>';
