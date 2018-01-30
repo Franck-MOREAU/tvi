@@ -31,20 +31,16 @@
  */
 
 require ("../../../../main.inc.php");
-require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
-require_once DOL_DOCUMENT_ROOT.'/core/lib/price.lib.php';
-require_once DOL_DOCUMENT_ROOT.'/core/lib/contract.lib.php';
-require_once DOL_DOCUMENT_ROOT.'/contrat/class/contrat.class.php';
-require_once DOL_DOCUMENT_ROOT.'/core/modules/contract/modules_contract.php';
-require_once DOL_DOCUMENT_ROOT.'/core/class/doleditor.class.php';
-require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
-require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
-if (! empty($conf->propal->enabled))  require_once DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
-if (! empty($conf->projet->enabled)) {
-	require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
-	require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
-}
-require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
+dol_include_once('/core/lib/date.lib.php');
+dol_include_once('/core/lib/price.lib.php');
+dol_include_once('/core/lib/contract.lib.php');
+dol_include_once('/contrat/class/contrat.class.php');
+dol_include_once('/core/modules/contract/modules_contract.php');
+dol_include_once('/core/class/doleditor.class.php');
+dol_include_once('/core/class/html.formfile.class.php');
+rdol_include_once('/product/class/product.class.php');
+dol_include_once('/core/class/extrafields.class.php');
+dol_include_once('/tvi/class/tvi.class.php');
 
 $langs->load("contracts");
 $langs->load("orders");
@@ -1393,17 +1389,6 @@ else
 
 		print '<table class="border" width="100%">';
 
-		// Ligne info remises tiers
-		
-		// Date
-// 		print '<tr>';
-// 		print '<td class="titlefield">';
-// 		print $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer);
-// 		print '</td><td colspan="2">';
-// 		print $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
-// 		print '</td>';
-// 		print '</tr>';
-		
 		// Date
 		print '<tr>';
 		print '<td class="titlefield">';
@@ -1468,9 +1453,11 @@ else
 		print '</td>';
 		print '</tr>';
 		
+		$vh = new Vehicules($db);
+		
 		print '<td class="titlefield">';
 		print 'véhicule';
-		print '</td><td colspan="2">';
+		print '</td>' . $vh->print_vehicule_details($object->array_options['options_vehicule']) . '<td colspan="2">';
 		print '</tr>';
 				
 		print '<tr>';
