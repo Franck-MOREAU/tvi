@@ -1195,6 +1195,12 @@ class Vehicules extends CommonObject
 	public $marque;
 	public $active;
 	
+	function __construct($db) {
+		
+		$this->db = $db;
+				
+	}
+	
 	
 	function create($user, $notrigger = 0) {
 		global $conf, $langs;
@@ -1272,6 +1278,349 @@ class Vehicules extends CommonObject
 				$error ++;
 				$this->errors[] = "Error " . $this->db->lasterror();
 			}
+			
 		}
+		
+		if (! $error) {
+			$this->id = $this->db->last_insert_id(MAIN_DB_PREFIX . $this->table_element);
+			
+			if (! $notrigger) {
+				// // Call triggers
+				include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				$interface = new Interfaces($this->db);
+				$result = $interface->run_triggers('VEHICULE_CREATE', $this, $user, $langs, $conf);
+				if ($result < 0) {
+					$error ++;
+					$this->errors = $interface->errors;
+				}
+				// // End call triggers
+			}
+		}
+		
+		// Commit or rollback
+		if ($error) {
+			foreach ( $this->errors as $errmsg ) {
+				dol_syslog(get_class($this) . "::create " . $errmsg, LOG_ERR);
+			}
+			$this->db->rollback();
+			return - 1 * $error;
+		} else {
+			$this->db->commit();
+			return $this->id;
+		}
+	}
+	
+	
+	/**
+	 * Load object in memory from the database
+	 *
+	 * @param int $id object
+	 * @return int <0 if KO, >0 if OK
+	 */
+	function fetch($id) {
+		global $langs;
+		$sql = "SELECT";
+		$sql .= " t.rowid,";
+		$sql .= " t.parc,";
+		$sql .= " t.type,";
+		$sql .= " t.immat,";
+		$sql .= " t.chassis,";
+		$sql .= " t.marque,";
+		$sql .= " t.active";
+		
+		$sql .= " FROM " . MAIN_DB_PREFIX . $this->table_element . " as t";
+		$sql .= " WHERE t.rowid = " . $id;
+		
+		dol_syslog(get_class($this) . "::fetch sql=" . $sql, LOG_DEBUG);
+		$resql = $this->db->query($sql);
+		
+		if ($resql) {
+			if ($this->db->num_rows($resql)) {
+				$obj = $this->db->fetch_object($resql);
+				$this->id = $obj->rowid;
+				$this->parc = $obj->parc;
+				$this->type = $obj->type;
+				$this->immat = $obj->immat;
+				$this->chassis = $obj->chassis;
+				$this->marque = $obj->marque;
+				$this->active = $obj->active;
+			}
+			$this->db->free($resql);
+			
+			return 1;
+		} else {
+			$this->error = "Error " . $this->db->lasterror();
+			dol_syslog(get_class($this) . "::fetch " . $this->error, LOG_ERR);
+			return - 1;
+		}
+	}
+	
+	/**
+	 * Load object in memory from the database
+	 *
+	 * @param string $sortorder order
+	 * @param string $sortfield field
+	 * @param int $limit page
+	 * @param int $offset Offset results
+	 * @param array $filter output
+	 *
+	 * @return int <0 if KO, >0 if OK
+	 */
+	function fetch_all($sortorder, $sortfield, $limit, $offset, $filter = array()) {
+		global $langs;
+		$sql = "SELECT";
+		$sql .= " t.rowid,";
+		$sql .= " t.parc,";
+		$sql .= " t.type,";
+		$sql .= " t.immat,";
+		$sql .= " t.chassis,";
+		$sql .= " t.marque,";
+		$sql .= " t.active";
+		
+		$sql .= " FROM " . MAIN_DB_PREFIX . $this->table_element . " as t";
+		$sql .= " WHERE 1";
+		
+		if (is_array($filter)) {
+			foreach ( $filter as $key => $value ) {
+				if (($key == 't.parc') || ($key == 't.rowid') || ($key == 't.active')) {
+					$sql .= ' AND ' . $key . ' = ' . $value;
+				} else {
+					$sql .= ' AND ' . $key . ' LIKE \'%' . $this->db->escape($value) . '%\'';
+				}
+			}
+		}
+		
+		if (! empty($sortfield)) {
+			$sql .= " ORDER BY " . $sortfield . ' ' . $sortorder;
+		}
+		
+		if (! empty($limit)) {
+			$sql .= ' ' . $this->db->plimit($limit + 1, $offset);
+		}
+		
+		dol_syslog(get_class($this) . "::fetch_all sql=" . $sql, LOG_DEBUG);
+		$resql = $this->db->query($sql);
+		
+		if ($resql) {
+			$this->lines = array ();
+			
+			$num = $this->db->num_rows($resql);
+			
+			while ( $obj = $this->db->fetch_object($resql) ) {
+				
+				$line = new Vehicules($this->db);
+				$line->id = $obj->rowid;
+				$line->parc = $obj->parc;
+				$line->type = $obj->type;
+				$line->immat = $obj->immat;
+				$line->chassis = $obj->chassis;
+				$line->marque = $obj->marque;
+				$line->active = $obj->active;
+				$this->lines[] = $line;
+			}
+			$this->db->free($resql);
+			
+			return $num;
+		} else {
+			$this->error = "Error " . $this->db->lasterror();
+			dol_syslog(get_class($this) . "::fetch_all " . $this->error, LOG_ERR);
+			return - 1;
+		}
+	}
+	
+	/**
+	 * Update object into database
+	 *
+	 * @param User $user that modifies
+	 * @param int $notrigger triggers after, 1=disable triggers
+	 * @return int <0 if KO, >0 if OK
+	 */
+	function update($user = null, $notrigger = 0) {
+		global $conf, $langs;
+		$error = 0;
+		
+		// Clean parameters
+		
+		if (isset($this->parc))
+			$this->parc = trim($this->parc);
+		if (isset($this->type))
+			$this->type = trim($this->type);
+		if (isset($this->immat))
+			$this->immat = trim($this->immat);
+		if (isset($this->chassis))
+			$this->chassis = trim($this->chassis);
+		if (isset($this->marque))
+			$this->marque = trim($this->marque);
+		if (isset($this->active))
+			$this->active = trim($this->active);
+		
+		
+		// Check parameters
+		if (empty($this->parc)) {
+			$error ++;
+			$this->errors[] = 'Saisie du N° de parc obligatoire';
+		}
+		if (empty($this->type)) {
+			$error ++;
+			$this->errors[] = 'Saisie du type obligatoire';
+		}
+		if (empty($this->immat)) {
+			$error ++;
+			$this->errors[] = "Saisie de l'immatriculation obligatoire";
+		}
+		if (empty($this->chassis)) {
+			$error ++;
+			$this->errors[] = "saisie du N° de chassis obligatoire";
+		}
+		if (empty($this->marque)) {
+			$error ++;
+			$this->errors[] = "Saisie de la marque obligatoire";
+		}
+		
+		if (! $error) {
+			// Update request
+			$sql = "UPDATE " . MAIN_DB_PREFIX . $this->table_element . " SET";
+			
+			$sql .= " parc='" . $this->db->escape($this->parc) . "',";
+			$sql .= " type='" . $this->db->escape($this->type) . "',";
+			$sql .= " immat='" . $this->db->escape($this->immat) . "',";
+			$sql .= " chassis='" . $this->db->escape($this->chassis) . "',";
+			$sql .= " marque='" . $this->db->escape($this->marque) . "',";
+			$sql .= " active='" . $this->db->escape($this->active) . "'";
+			
+			$sql .= " WHERE rowid=" . $this->id;
+			
+			$this->db->begin();
+			
+			dol_syslog(get_class($this) . "::update sql=" . $sql, LOG_DEBUG);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+		
+		if (! $error) {
+			if (! $notrigger) {
+				
+				// // Call triggers
+				include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				$interface = new Interfaces($this->db);
+				$result = $interface->run_triggers('VEHICULE_MODIFY', $this, $user, $langs, $conf);
+				if ($result < 0) {
+					$error ++;
+					$this->errors = $interface->errors;
+				}
+				// // End call triggers
+			}
+		}
+				
+		// Commit or rollback
+		if ($error) {
+			foreach ( $this->errors as $errmsg ) {
+				dol_syslog(get_class($this) . "::update " . $errmsg, LOG_ERR);
+				$this->error .= ($this->error ? ', ' . $errmsg : $errmsg);
+			}
+			$this->db->rollback();
+			return - 1 * $error;
+		} else {
+			$this->db->commit();
+			return 1;
+		}
+	}
+	
+	/**
+	 * Delete object in database
+	 *
+	 * @param User $user that deletes
+	 * @param int $notrigger triggers after, 1=disable triggers
+	 * @return int <0 if KO, >0 if OK
+	 */
+	function delete($user, $notrigger = 0) {
+		global $conf, $langs;
+		$error = 0;
+		
+		$this->db->begin();
+		
+		if (! $error) {
+			if (! $notrigger) {
+				
+				// // Call triggers
+				include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				$interface = new Interfaces($this->db);
+				$result = $interface->run_triggers('VEHICULE_DELETE', $this, $user, $langs, $conf);
+				if ($result < 0) {
+					$error ++;
+					$this->errors = $interface->errors;
+				}
+				// // End call triggers
+			}
+		}
+		
+			
+		if (! $error) {
+			$sql = "DELETE FROM " . MAIN_DB_PREFIX . $this->table_element;
+			$sql .= " WHERE rowid=" . $this->id;
+			
+			dol_syslog(get_class($this) . "::delete sql=" . $sql);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+		
+		// Commit or rollback
+		if ($error) {
+			foreach ( $this->errors as $errmsg ) {
+				dol_syslog(get_class($this) . "::delete " . $errmsg, LOG_ERR);
+				$this->error .= ($this->error ? ', ' . $errmsg : $errmsg);
+			}
+			$this->db->rollback();
+			return - 1 * $error;
+		} else {
+			$this->db->commit();
+			return 1;
+		}
+	}
+	
+	function print_vehicule_details($id){
+		$vh = new Vehicules($this->db);
+		$vh->fetch($id);
+		$out = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+		return $out;
+	}
+	
+	function select_vehicule($html_name,$value=0){
+		global $conf, $user;
+		$vh = new Vehicules($this->db);
+		$array_filter = array('active'=>1);
+		$num=$vh->fetch_all('ASC', 'parc', 0, 0,$array_filter);
+		if($num > 0){
+			$array_out=array();
+			foreach ($vh->lines as $line){
+				$array_out[$vh->id] = $vh->parc . ' - ' . $vh->marque . ' - ' . $vh->type . ' - ' . $vh->immat . ' - ' . $vh->chassis;
+			}
+			dol_include_once('/core/class/html.form.class.php');
+			
+			$events=null;
+			
+			if ($conf->use_javascript_ajax && ! $forcecombo)
+			{
+				include_once DOL_DOCUMENT_ROOT . '/core/lib/ajax.lib.php';
+				$comboenhancement =ajax_combobox($htmlname, $events, $conf->global->PRODUIT_USE_SEARCH_TO_SELECT);
+				$out.= $comboenhancement;
+			}
+			
+			$out.='<select class="flat" name="'.$htmlname.'" id="'.$htmlname.'">';
+			$out.='<option value="0"'.($value=0?'selected':'').'></option>';
+			foreach ($array_out as $id=> $display){
+				$out.='<option value="'.$id.'"'.($value=$id?'selected':'').'>'.$display.'</option>';
+			}
+			
+		}
+		$out.='</select>';
+		
+		return $out;
 	}
 }
