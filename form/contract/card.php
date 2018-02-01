@@ -62,8 +62,7 @@ $datecontrat='';
 $usehm=(! empty($conf->global->MAIN_USE_HOURMIN_IN_DATE_RANGE)?$conf->global->MAIN_USE_HOURMIN_IN_DATE_RANGE:0);
 
 // Security check
-if ($user->societe_id) $socid=$user->societe_id;
-$result=restrictedArea($user,'contrat',$id);
+if(!$user->rights->tvi->read_contrat) accessforbidden();
 
 // Initialize technical object to manage hooks of page. Note that conf->hooks_modules contains array of hook context
 $hookmanager->initHooks(array('contractcardtvi','globalcard'));
@@ -87,8 +86,8 @@ $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 $extrafieldsline = new ExtraFields($db);
 $extralabelslines=$extrafieldsline->fetch_name_optionals_label($object->table_element_line);
 
-$permissionnote=$user->rights->contrat->creer;	// Used by the include of actions_setnotes.inc.php
-$permissiondellink=$user->rights->contrat->creer;	// Used by the include of actions_dellink.inc.php
+$permissionnote=$user->rights->tvi->create_contrat;	// Used by the include of actions_setnotes.inc.php
+$permissiondellink=$user->rights->tvi->create_contrat;	// Used by the include of actions_dellink.inc.php
 
 $vh = new Vehicules($db);
 
@@ -105,7 +104,7 @@ if (empty($reshook))
 
 	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';		// Must be include, not include_once
 	
-	if($action =='activall' && $user->rights->contrat->activer){
+	if($action =='activall' && $user->rights->tvi->create_contrat){
 		foreach($object->lines as $line) {
  				if ($line->date_ouverture_prevue<=dol_now() && dol_now()<=$line->date_fin_validite) {
  					$result = $object->active_line($user, $line->id, $line->date_ouverture_prevue, $line->date_fin_validite, '');
@@ -116,7 +115,7 @@ if (empty($reshook))
 		}
 	}
 
-	if ($action == 'confirm_active' && $confirm == 'yes' && $user->rights->contrat->activer)
+	if ($action == 'confirm_active' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$result = $object->active_line($user, GETPOST('ligne'), GETPOST('date'), GETPOST('dateend'), GETPOST('comment'));
 
@@ -130,7 +129,7 @@ if (empty($reshook))
 		}
 	}
 
-	else if ($action == 'confirm_closeline' && $confirm == 'yes' && $user->rights->contrat->activer)
+	else if ($action == 'confirm_closeline' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		if (! GETPOST('dateend'))
 		{
@@ -210,7 +209,7 @@ if (empty($reshook))
 	}
 
 	// Add contract
-	if ($action == 'add' && $user->rights->contrat->creer)
+	if ($action == 'add' && $user->rights->ctvi->create_contrat)
 	{
 		// Check
 		if (empty($datecontrat))
@@ -419,13 +418,13 @@ if (empty($reshook))
 		}
 	}
 
-	else if ($action == 'classin' && $user->rights->contrat->creer)
+	else if ($action == 'classin' && $user->rights->tvi->create_contrat)
 	{
 		$object->setProject(GETPOST('projectid'));
 	}
 
 	// Add a new line
-	else if ($action == 'addline' && $user->rights->contrat->creer)
+	else if ($action == 'addline' && $user->rights->tvi->create_contrat)
 	{
 		// Set if we used free entry or predefined product
 		$predef='';
@@ -661,7 +660,7 @@ if (empty($reshook))
 		}
 	}
 
-	else if ($action == 'updateline' && $user->rights->contrat->creer && ! GETPOST('cancel','alpha'))
+	else if ($action == 'updateline' && $user->rights->tvi->create_contrat && ! GETPOST('cancel','alpha'))
 	{
 	  if (!empty($date_start_update) && !empty($date_end_update) && $date_start_update > $date_end_update)
 	  {
@@ -759,7 +758,7 @@ if (empty($reshook))
 	  }
 	}
 
-	else if ($action == 'confirm_deleteline' && $confirm == 'yes' && $user->rights->contrat->creer)
+	else if ($action == 'confirm_deleteline' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$result = $object->deleteline(GETPOST('lineid'),$user);
 
@@ -774,29 +773,29 @@ if (empty($reshook))
 		}
 	}
 
-	else if ($action == 'confirm_valid' && $confirm == 'yes' && $user->rights->contrat->creer)
+	else if ($action == 'confirm_valid' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$result = $object->validate($user);
 	}
 
-	else if ($action == 'reopen' && $user->rights->contrat->creer)
+	else if ($action == 'reopen' && $user->rights->tvi->create_contrat)
 	{
 		$result = $object->reopen($user);
 	}
 
 	// Close all lines
-	else if ($action == 'confirm_close' && $confirm == 'yes' && $user->rights->contrat->creer)
+	else if ($action == 'confirm_close' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$object->closeAll($user);
 	}
 
 	// Close all lines
-	else if ($action == 'confirm_activate' && $confirm == 'yes' && $user->rights->contrat->creer)
+	else if ($action == 'confirm_activate' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$object->activateAll($user);
 	}
 
-	else if ($action == 'confirm_delete' && $confirm == 'yes' && $user->rights->contrat->supprimer)
+	else if ($action == 'confirm_delete' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		$result=$object->delete($user);
 		if ($result >= 0)
@@ -810,7 +809,7 @@ if (empty($reshook))
 		}
 	}
 
-	else if ($action == 'confirm_move' && $confirm == 'yes' && $user->rights->contrat->creer)
+	else if ($action == 'confirm_move' && $confirm == 'yes' && $user->rights->tvi->create_contrat)
 	{
 		if (GETPOST('newcid') > 0)
 		{
@@ -954,7 +953,7 @@ if (empty($reshook))
 
 	// Actions to build doc
 	$upload_dir = $conf->contrat->dir_output;
-	$permissioncreate = $user->rights->contrat->creer;
+	$permissioncreate = $user->rights->tvi->create_contrat;
 	include DOL_DOCUMENT_ROOT.'/core/actions_builddoc.inc.php';
 
 	// Actions to send emails
@@ -965,7 +964,7 @@ if (empty($reshook))
 	include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 
 
-	if (! empty($conf->global->MAIN_DISABLE_CONTACTS_TAB) && $user->rights->contrat->creer)
+	if (! empty($conf->global->MAIN_DISABLE_CONTACTS_TAB) && $user->rights->tvi->create_contrat)
 	{
 		if ($action == 'addcontact')
 		{
@@ -1271,7 +1270,7 @@ else
 		/*
          *   Contrat
          */
-		if (! empty($object->brouillon) && $user->rights->contrat->creer)
+		if (! empty($object->brouillon) && $user->rights->tvi->create_contrat)
 		{
 			print '<form action="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'" method="POST">';
 			print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
@@ -1293,14 +1292,14 @@ else
 		if (! empty($modCodeContract->code_auto)) {
 			$morehtmlref.=$object->ref;
 		} else {
-			$morehtmlref.=$form->editfieldkey("",'ref',$object->ref,$object,$user->rights->contrat->creer,'string','',0,3);
-			$morehtmlref.=$form->editfieldval("",'ref',$object->ref,$object,$user->rights->contrat->creer,'string','',0,2);
+			$morehtmlref.=$form->editfieldkey("",'ref',$object->ref,$object,$user->rights->tvi->create_contrat,'string','',0,3);
+			$morehtmlref.=$form->editfieldval("",'ref',$object->ref,$object,$user->rights->tvi->create_contrat,'string','',0,2);
 		}
 
 		$morehtmlref.='<div class="refidno">';
 		// Ref customer
-		$morehtmlref.=$form->editfieldkey("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', 0, 1);
-		$morehtmlref.=$form->editfieldval("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->contrat->creer, 'string', '', null, null, '', 1);
+		$morehtmlref.=$form->editfieldkey("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->tvi->create_contrat, 'string', '', 0, 1);
+		$morehtmlref.=$form->editfieldval("RefCustomer", 'ref_customer', $object->ref_customer, $object, $user->rights->tvi->create_contrat, 'string', '', null, null, '', 1);
 		
 		if($action == 'edit_extras' && $attribute == 'typ_contract'){
 			$morehtmlref.='<br>';
@@ -1318,8 +1317,8 @@ else
 		    $morehtmlref.= ' : ' . $extrafields->showOutputField('typ_contract', $object->array_options['options_typ_contract']);
 			
 		}
-		$morehtmlref.='<br>'. $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datepicker','',0,1) ;
-		$morehtmlref.= $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->contrat->creer,'datehourpicker');
+		$morehtmlref.='<br>'. $form->editfieldkey("Date",'date_contrat',$object->date_contrat,$object,$user->rights->tvi->create_contrat,'datepicker','',0,1) ;
+		$morehtmlref.= $form->editfieldval("Date",'date_contrat',$object->date_contrat,$object,$user->rights->tvi->create_contrat,'datehourpicker');
 		
 		$morehtmlref.='</div>';
 
@@ -1477,7 +1476,7 @@ else
 
 		print '</div>';
 
-		if (! empty($object->brouillon) && $user->rights->contrat->creer)
+		if (! empty($object->brouillon) && $user->rights->tvi->create_contrat)
 		{
 			print '</form>';
 		}
@@ -1628,19 +1627,19 @@ else
 
 					// Icon move, update et delete (statut contrat 0=brouillon,1=valide,2=ferme)
 					print '<td align="right" class="nowrap">';
-					if ($user->rights->contrat->creer && count($arrayothercontracts) && ($object->statut >= 0))
+					if ($user->rights->tvi->create_contrat&& count($arrayothercontracts) && ($object->statut >= 0))
 					{
 						print '<a style="padding-left: 5px;" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&amp;action=move&amp;rowid='.$objp->rowid.'">';
 						print img_picto($langs->trans("MoveToAnotherContract"),'uparrow');
 						print '</a>';
 					}
-					if ($user->rights->contrat->creer && ($object->statut >= 0))
+					if ($user->rights->tvi->create_contrat&& ($object->statut >= 0))
 					{
 						print '<a style="padding-left: 5px;" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&amp;action=editline&amp;rowid='.$objp->rowid.'">';
 						print img_edit();
 						print '</a>';
 					}
-					if ( $user->rights->contrat->creer && ($object->statut >= 0))
+					if ( $user->rights->tvi->create_contrat&& ($object->statut >= 0))
 					{
 						print '<a style="padding-left: 5px;" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&amp;action=deleteline&amp;rowid='.$objp->rowid.'">';
 						print img_delete();
@@ -1803,7 +1802,7 @@ else
 			/*
              * Confirmation to delete service line of contract
              */
-			if ($action == 'deleteline' && ! $_REQUEST["cancel"] && $user->rights->contrat->creer && $object->lines[$cursorline-1]->id == GETPOST('rowid'))
+			if ($action == 'deleteline' && ! $_REQUEST["cancel"] && $user->rights->tvi->create_contrat && $object->lines[$cursorline-1]->id == GETPOST('rowid'))
 			{
 				print $form->formconfirm($_SERVER["PHP_SELF"]."?id=".$object->id."&lineid=".GETPOST('rowid'),$langs->trans("DeleteContractLine"),$langs->trans("ConfirmDeleteContractLine"),"confirm_deleteline",'',0,1);
 				if ($ret == 'html') print '<table class="notopnoleftnoright" width="100%"><tr class="oddeven" height="6"><td></td></tr></table>';
@@ -1812,7 +1811,7 @@ else
 			/*
              * Confirmation to move service toward another contract
              */
-			if ($action == 'move' && ! $_REQUEST["cancel"] && $user->rights->contrat->creer && $object->lines[$cursorline-1]->id == GETPOST('rowid'))
+			if ($action == 'move' && ! $_REQUEST["cancel"] && $user->rights->tvi->create_contrat && $object->lines[$cursorline-1]->id == GETPOST('rowid'))
 			{
 				$arraycontractid=array();
 				foreach($arrayothercontracts as $contractcursor)
@@ -1832,7 +1831,7 @@ else
 			/*
              * Confirmation de la validation activation
              */
-			if ($action == 'active' && ! $_REQUEST["cancel"] && $user->rights->contrat->activer && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
+			if ($action == 'active' && ! $_REQUEST["cancel"] && $user->rights->tvi->create_contrat&& $object->lines[$cursorline-1]->id == GETPOST('ligne'))
 			{
 				$dateactstart = dol_mktime(12, 0, 0, GETPOST('remonth'), GETPOST('reday'), GETPOST('reyear'));
 				$dateactend   = dol_mktime(12, 0, 0, GETPOST('endmonth'), GETPOST('endday'), GETPOST('endyear'));
@@ -1844,7 +1843,7 @@ else
 			/*
              * Confirmation de la validation fermeture
              */
-			if ($action == 'closeline' && ! $_REQUEST["cancel"] && $user->rights->contrat->activer && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
+			if ($action == 'closeline' && ! $_REQUEST["cancel"] && $user->rights->tvi->create_contrat && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
 			{
 				$dateactstart = dol_mktime(12, 0, 0, GETPOST('remonth'), GETPOST('reday'), GETPOST('reyear'));
 				$dateactend   = dol_mktime(12, 0, 0, GETPOST('endmonth'), GETPOST('endday'), GETPOST('endyear'));
@@ -1883,7 +1882,7 @@ else
 							$tmpactionpicto='playstop';
 							$tmpactiontext=$langs->trans("Unactivate");
 						}
-						if (($tmpaction=='activateline' && $user->rights->contrat->activer) || ($tmpaction=='unactivateline' && $user->rights->contrat->desactiver))
+						if (($tmpaction=='activateline' && $user->rights->tvi->create_contrat) || ($tmpaction=='unactivateline' && $user->rights->tvi->create_contrat))
 						{
 							print '<a href="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '&amp;ligne=' . $object->lines[$cursorline - 1]->id . '&amp;action=' . $tmpaction . '">';
 							print img_picto($tmpactiontext, $tmpactionpicto);
@@ -1926,7 +1925,7 @@ else
 			}
 
 			// Form to activate line
-			if ($user->rights->contrat->activer && $action == 'activateline' && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
+			if ($user->rights->tvi->create_contrat&& $action == 'activateline' && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
 			{
 				print '<form name="active" action="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;ligne='.GETPOST('ligne').'&amp;action=active" method="post">';
 				print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
@@ -1975,7 +1974,7 @@ else
 				print '</form>';
 			}
 
-			if ($user->rights->contrat->activer && $action == 'unactivateline' && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
+			if ($user->rights->tvi->create_contrat&& $action == 'unactivateline' && $object->lines[$cursorline-1]->id == GETPOST('ligne'))
 			{
 				/**
 				 * Disable a contract line
@@ -2037,7 +2036,7 @@ else
 		}
 
 		// Form to add new line
-		if ($user->rights->contrat->creer && ($object->statut == 0))
+		if ($user->rights->tvi->create_contrat&& ($object->statut == 0))
 		{
 			$dateSelector=1;
 
@@ -2097,7 +2096,7 @@ else
 				$out = '<script type="text/javascript">' . "\n";
 				$out .= '  	$(document).ready(function() {' . "\n";
 				
-				if ($user->rights->contrat->activer && $nbFiles<2) {
+				if ($user->rights->tvi->create_contrat && $nbFiles<2) {
 					$out .= '		$a = $(\'<div class="inline-block divButAction"><a class="butAction" href="'.dol_buildpath('/contrat/card.php',2).'?id='.$object->id.'&amp;action=activall">'.$langs->trans("Activer tout les services (dates prévues)").'</a></div>\');' . "\n";
 					$out .= '		$(\'div.fiche div.tabsAction\').first().prepend($a);' . "\n";
 				}
@@ -2118,12 +2117,12 @@ else
 
 				if ($object->statut == 0 && $nbofservices)
 				{
-					if ($user->rights->contrat->creer) print '<div class="inline-block divButAction"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=valid">'.$langs->trans("Validate").'</a></div>';
+					if ($user->rights->tvi->create_contrat) print '<div class="inline-block divButAction"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=valid">'.$langs->trans("Validate").'</a></div>';
 					else print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="'.$langs->trans("NotEnoughPermissions").'">'.$langs->trans("Validate").'</a></div>';
 				}
 				if ($object->statut == 1)
 				{
-					if ($user->rights->contrat->creer) print '<div class="inline-block divButAction"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=reopen">'.$langs->trans("Modify").'</a></div>';
+					if ($user->rights->tvi->create_contrat) print '<div class="inline-block divButAction"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=reopen">'.$langs->trans("Modify").'</a></div>';
 					else print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="'.$langs->trans("NotEnoughPermissions").'">'.$langs->trans("Modify").'</a></div>';
 				}
 
@@ -2142,7 +2141,7 @@ else
 				}
 
 				// Clone
-				if ($user->rights->contrat->creer) {
+				if ($user->rights->tvi->create_contrat) {
 					print '<div class="inline-block divButAction"><a class="butAction" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $object->socid . '&amp;action=clone&amp;object=' . $object->element . '">' . $langs->trans("ToClone") . '</a></div>';
 				}
 
@@ -2165,7 +2164,7 @@ else
 				// On peut supprimer entite si
 				// - Droit de creer + mode brouillon (erreur creation)
 				// - Droit de supprimer
-				if (($user->rights->contrat->creer && $object->statut == 0) || $user->rights->contrat->supprimer)
+				if (($user->rights->tvi->create_contrat&& $object->statut == 0) || $user->admin)
 				{
 					print '<div class="inline-block divButAction"><a class="butActionDelete" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=delete">'.$langs->trans("Delete").'</a></div>';
 				}
@@ -2193,8 +2192,8 @@ else
 			$filename = dol_sanitizeFileName($object->ref);
 			$filedir = $conf->contrat->dir_output . "/" . dol_sanitizeFileName($object->ref);
 			$urlsource = $_SERVER["PHP_SELF"] . "?id=" . $object->id;
-			$genallowed = $user->rights->contrat->lire;
-			$delallowed = $user->rights->contrat->creer;
+			$genallowed = $user->rights->tvi->read_contrat;
+			$delallowed = $user->rights->tvi->create_contrat;
 
 			$var = true;
 

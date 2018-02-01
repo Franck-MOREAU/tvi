@@ -84,8 +84,7 @@ if (! $sortorder) $sortorder='DESC';
 
 // Security check
 $id=GETPOST('id','int');
-if ($user->societe_id) $socid=$user->societe_id;
-$result = restrictedArea($user, 'contrat_tvi', $id);
+if(!$user->rights->tvi->read_contrat) accessforbidden();
 
 $diroutputmassaction=$conf->contrat->dir_output . '/temp/massgeneration/'.$user->id;
 
@@ -187,8 +186,8 @@ if (empty($reshook))
 {
 	$objectclass='Contrat';
 	$objectlabel='Contracts';
-	$permtoread = $user->rights->contrat->lire;
-	$permtodelete = $user->rights->contrat->supprimer;
+	$permtoread = $user->rights->tvi->read_contrat;
+	$permtodelete = $user->admin;
 	$uploaddir = $conf->contrat->dir_output;
 	include DOL_DOCUMENT_ROOT.'/core/actions_massactions.inc.php';
 }
@@ -371,7 +370,7 @@ if ($resql)
 		'presend'=>$langs->trans("SendByMail"),
 		'builddoc'=>$langs->trans("PDFMerge"),
 	);
-	if ($user->rights->contrat->supprimer) $arrayofmassactions['delete']=$langs->trans("Delete");
+	if ($user->admin) $arrayofmassactions['delete']=$langs->trans("Delete");
 	if ($massaction == 'presend') $arrayofmassactions=array();
 	$massactionbutton=$form->selectMassAction('', $arrayofmassactions);
 
@@ -853,8 +852,8 @@ if ($resql)
 		$urlsource.=str_replace('&amp;','&',$param);
 
 		$filedir=$diroutputmassaction;
-		$genallowed=$user->rights->contrat->lire;
-		$delallowed=$user->rights->contrat->lire;
+		$genallowed=$user->rights->tvi->read_contrat;
+		$delallowed=$user->rights->tvi->create_contrat;
 
 		print $formfile->showdocuments('massfilesarea_contract','',$filedir,$urlsource,0,$delallowed,'',1,1,0,48,1,$param,$title,'');
 	}

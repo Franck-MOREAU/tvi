@@ -331,9 +331,30 @@ class modtvi extends DolibarrModules
 		$this->rights[$r][0] = 1035711;
 		$this->rights[$r][1] = 'Mettre a jour le parc';
 		$this->rights[$r][3] = 1;
-		$this->rights[$r][4] = 'parc';
+		$this->rights[$r][4] = 'create_parc';
 		$r ++;
-
+		
+		$r = 0;
+		$this->rights[$r][0] = 1035711;
+		$this->rights[$r][1] = 'Mettre a jour le parc';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'read_parc';
+		$r ++;
+		
+		$r = 0;
+		$this->rights[$r][0] = 1035711;
+		$this->rights[$r][1] = 'Créer les contrats';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'create_contrat';
+		$r ++;
+		
+		$r = 0;
+		$this->rights[$r][0] = 1035711;
+		$this->rights[$r][1] = 'Voir les contrats';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'read_contrat';
+		$r ++;
+		
 		$this->rights[$r][0] = 1035712;
 		$this->rights[$r][1] = 'exporter les ecritures comptables';
 		$this->rights[$r][3] = 1;
