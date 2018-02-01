@@ -389,8 +389,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/facturation.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->facturation',
-				'perms' => '$user->rights->facturation',
+				'enabled' => '$user->rights->tvi->facturation',
+				'perms' => '$user->rights->tvi->facturation',
 				'target' => '',
 				'user' => 0
 		);
@@ -404,12 +404,14 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/journal_sell.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->compta',
-				'perms' => '$user->rights->compta',
+				'enabled' => '$user->rights->tvi->compta',
+				'perms' => '$user->rights->tvi->compta',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
+		
+		
 
 		
 	}
