@@ -1334,7 +1334,7 @@ else
 
 		// Date
 		print '<tr>';
-		print '<td class="titlefield">';
+		print '<td>';
 		print $langs->trans('ThirdParty');
 		print '</td><td colspan="2">';
 		print $object->thirdparty->getNomUrl(1) . '<br>';
