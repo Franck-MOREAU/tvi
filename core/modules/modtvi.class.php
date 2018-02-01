@@ -334,21 +334,18 @@ class modtvi extends DolibarrModules
 		$this->rights[$r][4] = 'create_parc';
 		$r ++;
 		
-		$r = 0;
 		$this->rights[$r][0] = 1035711;
 		$this->rights[$r][1] = 'Mettre a jour le parc';
 		$this->rights[$r][3] = 1;
 		$this->rights[$r][4] = 'read_parc';
 		$r ++;
 		
-		$r = 0;
 		$this->rights[$r][0] = 1035711;
 		$this->rights[$r][1] = 'Créer les contrats';
 		$this->rights[$r][3] = 1;
 		$this->rights[$r][4] = 'create_contrat';
 		$r ++;
 		
-		$r = 0;
 		$this->rights[$r][0] = 1035711;
 		$this->rights[$r][1] = 'Voir les contrats';
 		$this->rights[$r][3] = 1;
@@ -395,8 +392,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/contract/list.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->tvi->parc',
-				'perms' => '$user->rights->tvi->parc',
+				'enabled' => '$user->rights->tvi->read_parc',
+				'perms' => '$user->rights->tvi->read_parc',
 				'target' => '',
 				'user' => 0
 		);
@@ -411,8 +408,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/contract/list.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->tvi->parc',
-				'perms' => '$user->rights->tvi->parc',
+				'enabled' => '$user->rights->tvi->read_contrat',
+				'perms' => '$user->rights->tvi->read_contrat',
 				'target' => '',
 				'user' => 0
 		);
@@ -426,8 +423,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/contract/list.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->tvi->parc',
-				'perms' => '$user->rights->tvi->parc',
+				'enabled' => '$user->rights->tvi->read_contrat',
+				'perms' => '$user->rights->tvi->read_contrat',
 				'target' => '',
 				'user' => 0
 		);
@@ -441,8 +438,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/contract/card.php?action=create',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$user->rights->tvi->parc',
-				'perms' => '$user->rights->tvi->parc',
+				'enabled' => '$user->rights->tvi->create_contrat',
+				'perms' => '$user->rights->tvi->create_contrat',
 				'target' => '',
 				'user' => 0
 		);
@@ -457,8 +454,8 @@ class modtvi extends DolibarrModules
 				'url' => '/tvi/form/parc.php',
 				'langs' => '',
 				'position' => 100 + $r,
-				'enabled' => '$conf->tvi->enabled',
-				'perms' => '$conf->tvi->enabled',
+				'enabled' => '$user->rights->tvi->compta',
+				'perms' => '$user->rights->tvi->compta',
 				'target' => '',
 				'user' => 0
 		);
