@@ -364,11 +364,73 @@ class modtvi extends DolibarrModules
 				'user' => 0
 		);
 		$r ++;
+		
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=tvi',
+				'type' => 'left',
+				'titre' => "Parc",
+				'mainmenu' => 'tvi',
+				'leftmenu' => 'parc',
+				'url' => '/tvi/form/contract/list.php',
+				'langs' => '',
+				'position' => 100 + $r,
+				'enabled' => '$user->rights->tvi->parc',
+				'perms' => '$user->rights->tvi->parc',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+		
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=tvi',
+				'type' => 'left',
+				'titre' => "Contrats",
+				'mainmenu' => 'tvi',
+				'leftmenu' => 'tvi_ct',
+				'url' => '/tvi/form/contract/list.php',
+				'langs' => '',
+				'position' => 100 + $r,
+				'enabled' => '$user->rights->tvi->parc',
+				'perms' => '$user->rights->tvi->parc',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+		
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=tvi,fk_leftmenu=tvi_ct',
+				'type' => 'left',
+				'titre' => 'Liste',
+				'mainmenu' => 'tvi',
+				'url' => '/tvi/form/contract/list.php',
+				'langs' => '',
+				'position' => 100 + $r,
+				'enabled' => '$user->rights->tvi->parc',
+				'perms' => '$user->rights->tvi->parc',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+		
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=tvi,fk_leftmenu=tvi_ct',
+				'type' => 'left',
+				'titre' => 'Nouveau Contrat',
+				'mainmenu' => 'tvi',
+				'url' => '/tvi/form/contract/card.php?action=create',
+				'langs' => '',
+				'position' => 100 + $r,
+				'enabled' => '$user->rights->tvi->parc',
+				'perms' => '$user->rights->tvi->parc',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
 
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=tvi',
 				'type' => 'left',
-				'titre' => "TVI",
+				'titre' => "Compta",
 				'mainmenu' => 'tvi',
 				'leftmenu' => 'tvi_loc',
 				'url' => '/tvi/form/parc.php',
@@ -410,6 +472,8 @@ class modtvi extends DolibarrModules
 				'user' => 0
 		);
 		$r ++;
+		
+		
 		
 		
 
