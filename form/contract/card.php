@@ -1334,7 +1334,7 @@ else
 
 		// Date
 		print '<tr>';
-		print '<td class="titlefield" width="33%">';
+		print '<td>';
 		print $langs->trans('ThirdParty');
 		print '</td><td colspan="2">';
 		print $object->thirdparty->getNomUrl(1) . '<br>';
@@ -1417,7 +1417,7 @@ else
 		print '</tr>';
 									
 		print '<tr>';
-		print '<td class="titlefield">';
+		print '<td>';
 		print $extrafields->attribute_label['kmsup'];
 		if($action == 'edit_extras' && $attribute == 'kmsup'){
 			print ': ';
